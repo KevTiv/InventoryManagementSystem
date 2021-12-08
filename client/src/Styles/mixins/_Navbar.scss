@@ -1,0 +1,6 @@
+@use '../colors/colors' as color;
+
+@mixin Navbar{
+    width:100vw;
+    height: 10vh;
+}
