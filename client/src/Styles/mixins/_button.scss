@@ -1,0 +1,12 @@
+@mixin button{
+    width: max(8rem, 150px);
+
+    aspect-ratio: 2;
+    margin: 1rem;
+    border-radius: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    @apply border-2;
+}

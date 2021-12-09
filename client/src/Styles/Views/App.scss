@@ -1,0 +1,38 @@
+@use '../mixins/darkMode' as *;
+:root {
+  --app-bg: #e9ecef;
+    --app-webkit-bg: -webkit-linear-gradient(to bottom right,
+      #e9ecef,
+      #ced4da);
+    --app-moz-bg: -moz-linear-gradient(to bottom right,
+      #e9ecef,
+      #ced4da);
+    --app-bg: linear-gradient(to bottom right, #e9ecef, #ced4da);
+
+  @include darkMode {
+    --app-bg: #111827;
+    --app-webkit-bg: -webkit-linear-gradient(to top left,
+      #111827,
+      #1f2937,
+      #374151);
+    --app-moz-bg: -moz-linear-gradient(to top left,
+      #111827,
+      #1f2937,
+      #374151);
+    --app-bg: linear-gradient(to top left,
+      #111827,
+      #1f2937,
+      #374151);
+  }
+}
+
+.App {
+  width:100%;
+  margin: 0;
+  padding: 0;
+  top: 0;
+  left: 0;
+  background: var(--app-moz-bg);
+  background: var(--app-webkit-bg);
+  background: var(--app-bg);
+}
