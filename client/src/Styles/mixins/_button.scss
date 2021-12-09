@@ -1,7 +1,8 @@
+@use '../mixins/mediaQuery' as *;
 @mixin button{
-    width: max(8rem, 150px);
+    width: max(8rem, 160px);
 
-    aspect-ratio: 2;
+    aspect-ratio: 1.75;
     margin: 1rem;
     border-radius: 2rem;
     display: flex;
@@ -9,4 +10,11 @@
     align-items: center;
 
     @apply border-2;
+
+    @include mobile {
+       width: max(5rem, 80px);
+       aspect-ratio: 2.5;
+       margin: 0.5rem;
+       border-radius: 1.5rem;
+    }
 }

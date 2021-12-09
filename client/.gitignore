@@ -21,3 +21,8 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+Sidebar_App.tsx
+AuthContext.tsx
+AuthProvider.tsx
+firebase.ts

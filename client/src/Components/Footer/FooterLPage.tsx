@@ -1,7 +1,7 @@
 import {Icon} from '@iconify/react';
 import githubIcon from '@iconify/icons-mdi/github';
 import linkedinIcon from '@iconify/icons-mdi/linkedin';
-import nasaLogo from '../Utils/Img/nasa_logo.png';
+
 
 type footerProps ={
     currentYear: number;
