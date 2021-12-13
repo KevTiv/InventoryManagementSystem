@@ -1,7 +1,4 @@
 import '../../Styles/Views/Pages/LandingPage.scss';
-import { useState } from 'react';
-import {handleGoogleAuth} from '../../Provider/AuthProvider';
-import {useNavigate} from 'react-router-dom';
 
 
 type landingPageNavProps = {
@@ -13,7 +10,6 @@ type landingPageNavProps = {
 }
 
 const NavbarLPage = ({showSigninModal, setShowSignin, signinMethod, setSignin, handleGoogleAuthClick}:landingPageNavProps) => {
-    let navigate = useNavigate();
     
     return (
         <>

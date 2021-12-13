@@ -1,0 +1,131 @@
+@use '../../mixins/darkMode' as *;
+:root{
+    --dashboard-text: #22223b;
+    --component-background: rgba(255, 255, 255, .025);
+    --component-hover-background: rgba(255, 255, 255, .2);
+    --sidebar-option-hover: rgba(255, 255, 255, .5);
+    --component-shadow: #d9d9d9;
+    @include darkMode{
+        --dashboard-text: #f2e9e4;
+        --component-shadow: #15151b;
+        --component-hover-background: rgba(255, 255, 255, .05);
+    }
+}
+
+.dashboard{
+    width: 100vw;
+    height: 100vh;
+    overflow-y: hidden;
+    overflow-x: scroll;
+    @apply grid grid-cols-12;
+}
+.sidebar{
+    // width: max(154px, 6rem);
+    height: 100%;
+    background-color: var(--component-background);
+    // background: lightblue;
+    backdrop-filter: blur(5px);
+    box-shadow: 0.25rem 0.25rem 0.25rem 0.075rem var(--component-shadow);
+    border-radius: 0rem 1rem 1rem 0rem;
+    @apply col-span-2;
+}
+.Sidebar-logo-wrapper{
+    display:block;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    margin-left: 1rem;
+}
+.sidebar-logo-title{
+    font-weight: 900;
+    color: var(--dashboard-text);
+    @apply text-lg;
+}
+.sidebar-option-wrapper{
+    height: 80%;
+    display: block;
+}
+.sidebar-option:hover {
+    width:70%;
+    margin-left: 0.75rem;
+    margin-right: 0.75rem;
+    box-shadow: 0rem 0.15rem 0.15rem 0.075rem var(--component-shadow);
+    transition-duration: 0.5s;
+}
+.sidebar-option span{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    color: var(--dashboard-text);
+    margin: 2rem;
+    font-weight: 600;
+    cursor: pointer;
+    @apply text-lg;
+    
+}
+.dashboard-header{
+    height: 10%;
+    display: flex;
+    align-items: center;
+    & h1{
+        margin-left: 1rem;
+        align-items: justify-start;
+        font-weight: 700;
+        @apply text-lg;
+    }
+    & div{
+        margin-left: auto;
+        margin-right: 1rem;
+    }
+
+}
+.dashboard-header-menu-icon{
+    visibility: hidden;
+    @apply text-3xl;
+}
+.dashboard-body{
+    position: relative;
+    @apply col-span-10 col-start-3;
+}
+.dashboard-footer{
+    display: flex;
+    align-items: flex-end;
+    @apply col-span-12 row-start-2;
+}
+
+
+.dashboard-curr-watch-container{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+//CARD CurrencyCard
+.currency-container{
+    background-color: var(--component-background);
+    backdrop-filter: blur(5px);
+    box-shadow: 0.25rem 0.25rem 0.25rem 0.075rem var(--component-shadow);
+    border-radius: 0rem 1rem 1rem 1rem;
+    margin: 3rem;
+    padding: 1rem;
+    display: flex;
+    &:hover {
+        background-color: var(--component-hover-background);
+    }
+}
+.currency-body{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: max(180px, 8rem);
+    aspect-ratio: 4;
+    color: var(--dashboard-text);
+    &-eur{
+        display: flex;
+        justify-content: flex-start;
+        margin-left: 1rem;
+        font-weight: 600;
+    }
+    &-conversion{
+        font-weight: 600;
+    }
+}
+

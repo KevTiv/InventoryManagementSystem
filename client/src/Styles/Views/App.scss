@@ -12,17 +12,17 @@
   @include darkMode {
     --app-bg: #111827;
     --app-webkit-bg: -webkit-linear-gradient(to top left,
-      #111827,
-      #1f2937,
-      #374151);
+      #0a0b0c,
+      #141a24,
+      #111827);
     --app-moz-bg: -moz-linear-gradient(to top left,
-      #111827,
-      #1f2937,
-      #374151);
+      #0a0b0c,
+      #141a24,
+      #111827);
     --app-bg: linear-gradient(to top left,
-      #111827,
-      #1f2937,
-      #374151);
+      #0a0b0c,
+      #141a24,
+      #111827);
   }
 }
 

@@ -7,7 +7,7 @@ type footerProps ={
     currentYear: number;
 }
 
-const FooterLPage = ({currentYear}:footerProps) => {
+const Footer = ({currentYear}:footerProps) => {
     const linkedinHrefLink:string = "https://rw.linkedin.com/in/kevin-tivert";
     const githubHrefLink:string = "https://github.com/KevTiv/inventoryManagementSystem";
 
@@ -37,4 +37,4 @@ const FooterLPage = ({currentYear}:footerProps) => {
     )
 }
 
-export default FooterLPage;
+export default Footer;

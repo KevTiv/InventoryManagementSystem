@@ -2,8 +2,7 @@
 import '../../Styles/Views/Pages/LandingPage.scss';
 import Navbar from '../../Components/Navbar/NavbarLPage';
 import Hero from '../../Components/Hero/HeroLPage';
-import Footer from '../../Components/Footer/FooterLPage';
-import {handleGoogleAuth} from '../../Provider/AuthProvider';
+import Footer from '../../Components/Footer/Footer';
 
 type landingPageProps = {
     currentYear: number,
