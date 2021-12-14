@@ -1,0 +1,44 @@
+//index.js
+
+
+// -- create a product
+app.post('/api/add_new_product', async(req,res)=>{
+    try{
+      const prodInitialStock = 0;
+      const {prodRef, prodName, prodBrand, prodCategory, prodGenDescription, prodGenCharacteristic, prodFactPrice,
+            prodWeight, prodCountryOrigin, prodSellUnit, prodBoxWeight, prodSku, prodMinQuantity, prodVolume,
+            prodCustomBorderId, prodBoxQuantity, prodBoxVolume} = req.body;
+
+      const newProduct = await pool.query(
+        "INSERT INTO ims_product_db (ims_prod_ref, ims_prod_name, ims_prod_brand,"+
+        "ims_prod_category, ims_prod_gen_description, ims_prod_gen_characteristic,"+
+        "ims_prod_factory_price, ims_prod_weight, ims_prod_country_of_origin, ims_prod_sell_unit, ims_prod_box_weight,"+
+        "ims_prod_sku, ims_prod_min_quantity, ims_prod_volume,ims_prod_custom_border_id, ims_prod_box_quantity, ims_prod_box_volume, ims_prod_quantity_instock, ims_prod_last_update)"+
+        "VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,NOW()) RETURNING *",
+        [prodRef, prodName, prodBrand, prodCategory, prodGenDescription, prodGenCharacteristic, prodFactPrice,
+            prodWeight, prodCountryOrigin, prodSellUnit, prodBoxWeight, prodSku, prodMinQuantity, prodVolume,
+            prodCustomBorderId, prodBoxQuantity, prodBoxVolume, prodInitialStock]
+      );
+      res.json(newProduct.rows[0]);
+    }catch(err){
+        console.error(err.message);
+    }
+});
+
+
+//connectDb
+
+import * as pg from "pg";
+import dotenv = require('dotenv');
+
+const { Pool } = pg;
+
+const pool:pg.Pool = new Pool({
+    user: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
+    host: process.env.DB_HOST,
+    port: parseInt(process.env.DB_PORT),
+    database: process.env.DB_NAME
+});
+
+module.exports = pool;
