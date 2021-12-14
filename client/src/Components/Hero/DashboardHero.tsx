@@ -5,6 +5,7 @@ import Menu from '@iconify/icons-dashicons/menu';
 import InventoryTable from '../Table/InventoryTable';
 import ProductTable from '../Table/ProductTable';
 import BrandTable from '../Table/BrandTable';
+import Table from '../Table/Table';
 type dashboardProps={
     EurToUsd: string,
     EurToRwf: string, 
@@ -40,15 +41,16 @@ const DashboardHero = (
                 <section>
                     <div className="dashboard-tables-show-panel">
                         <div className="dashboard-tables-show-panel-options">
+                            <h2>Table</h2>
                             <ul>
                                 <li>
                                     <span onClick={onClickInventory}>Inventory</span>
                                 </li>
                                 <li>
-                                    <span onClick={onClickProduct}>Products</span>
+                                    <span onClick={onClickProduct}>Product</span>
                                 </li>
                                 <li>
-                                    <span onClick={onClickBrand}>Brands</span>
+                                    <span onClick={onClickBrand}>Brand</span>
                                 </li>
                             </ul>
                         </div>
@@ -59,6 +61,9 @@ const DashboardHero = (
                         {showInventory?<InventoryTable/>:null}
                         {showProduct?<ProductTable/>:null}
                         {showBrand?<BrandTable/>:null}
+                    </div>
+                    <div>
+                        <Table/>
                     </div>
                 </section>
             </div>
