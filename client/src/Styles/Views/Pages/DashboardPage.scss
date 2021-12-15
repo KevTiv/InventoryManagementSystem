@@ -1,14 +1,14 @@
 @use '../../mixins/darkMode' as *;
 :root{
     --dashboard-text: #22223b;
-    --component-background: rgba(255, 255, 255, .025);
+    --component-background: rgba(255, 255, 255, .1);
     --component-hover-background: rgba(255, 255, 255, .2);
     --sidebar-option-hover: rgba(255, 255, 255, .5);
     --component-shadow: #d9d9d9;
     @include darkMode{
         --dashboard-text: #f2e9e4;
         --component-shadow: #15151b;
-        --component-hover-background: rgba(255, 255, 255, .05);
+        --component-hover-background: rgba(255, 255, 255, .3);
     }
 }
 
@@ -52,7 +52,7 @@
     display: flex;
     align-items: center;
     height: 2.5rem;
-    background-color: var(--component-background);
+    //background-color: var(--component-background);
     margin-top: 1rem;
     border-radius: 0rem 0rem 3rem 0rem;
     cursor: pointer;
