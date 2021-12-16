@@ -1,7 +1,7 @@
 import express = require('express');
 import { PrismaClient } from '@prisma/client';
 
-// !important: MIGRATE PRISMA DB => " npx prisma migrate dev --name init "
+// !important: create MIGRATE PRISMA DB => " npx prisma migrate dev --name init "
 
 // Middleware configuration
 const app = express();
