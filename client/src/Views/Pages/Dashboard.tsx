@@ -14,25 +14,55 @@ const Dashboard = () => {
     const [EurToRwf, setEurToRwf] = useState<string>('');
     const [EurToYuan, setEurToYuan] = useState<string>('');
     
-    const [showInventory, setShowInventory] = useState<boolean>(true);
-    const [showProduct, setShowProduct] = useState<boolean>(false);
-    const [showBrand, setShowBrand] = useState<boolean>(false);
+    const [showInventoryTable, setShowInventory] = useState<boolean>(true);
+    const [showProductTable, setShowProduct] = useState<boolean>(false);
+    const [showBrandTable, setShowBrand] = useState<boolean>(false);
 
-    const onClickInventory = () =>{
+    const [showDashboardComponent, setShowDashboardComponent] = useState<boolean>(true);
+    const [showInventoryComponent, setShowInventoryComponent] = useState<boolean>(false);
+    const [showProductComponent, setShowProductComponent] = useState<boolean>(false);
+    const [showBrandComponent, setShowBrandComponent] = useState<boolean>(false);
+
+    const onClickShowDashboardComponent = () => {
+        setShowDashboardComponent(true);
+        setShowInventoryComponent(false);
+        setShowProductComponent(false);
+        setShowBrandComponent(false);
+    };
+    const onClickShowProductComponent = () => {
+        setShowDashboardComponent(false);
+        setShowInventoryComponent(false);
+        setShowProductComponent(true);
+        setShowBrandComponent(false);
+    };
+    const onClickShowInventoryComponent = () => {
+        setShowDashboardComponent(false);
+        setShowInventoryComponent(true);
+        setShowProductComponent(false);
+        setShowBrandComponent(false);
+    };
+    const onClickShowBrandComponent = () => {
+        setShowDashboardComponent(false);
+        setShowInventoryComponent(false);
+        setShowProductComponent(false);
+        setShowBrandComponent(true);
+    };
+
+    const onClickInventoryTableOption = () =>{
         setShowInventory(true);
         setShowProduct(false);
         setShowBrand(false);
-    }
-    const onClickProduct = () =>{
+    };
+    const onClickProductTableOption = () =>{
         setShowInventory(false);
         setShowProduct(true);
         setShowBrand(false);
-    }
-    const onClickBrand = () =>{
+    };
+    const onClickBrandTableOption = () =>{
         setShowInventory(false);
         setShowProduct(false);
         setShowBrand(true);
-    }
+    };
     useEffect(()=>{
         let authToken = sessionStorage.getItem('Auth Token');
         console.log("AUTH TOKEN:__",authToken)
@@ -43,48 +73,36 @@ const Dashboard = () => {
             //sessionStorage.removeItem('Auth Token');
             sessionStorage.clear();
             navigate('/');
-        };
-
-        // const axios = require('axios');
-        // const getCurrencyRateFixerIO = async ()=>{
-        //     await axios.get('http://data.fixer.io/api/2013-12-24',{
-        //         params: {
-        //             access_key: process.env.REACT_APP_FIXERIO_API_KEY,
-        //             symbols: 'USD,CNY,RWF'
-        //         }
-        //     }).then( await function(res: any) {
-        //         console.log(res);
-        //         // const result = JSON.stringify(res);
-        //         setEurToUsd(JSON.stringify(res.data.rates.USD));
-        //         setEurToRwf(JSON.stringify(res.data.rates.RWF));
-        //         setEurToYuan(JSON.stringify(res.data.rates.CNY));
-        //         console.log('USD: ',EurToUsd,' RWF: ', EurToRwf, ' CNY: ',EurToYuan)
-                
-        //     }).catch(function(err: any){
-        //         console.error(err);
-        //     })
-        // }
-        // getCurrencyRateFixerIO();
-            
-    }, [navigate])
+        }; 
+    }, [navigate]);
 
     return (
         <>
             <div className="dashboard">
                 <div className="sidebar">
-                    <Sidebar/>
+                    <Sidebar onClickShowDashboardComponent={onClickShowDashboardComponent} onClickShowProductComponent={onClickShowProductComponent} 
+                        onClickShowInventoryComponent={onClickShowInventoryComponent} onClickShowBrandComponent={onClickShowBrandComponent}/>
                 </div>
                 <div className="dashboard-body">
                     <div className="dashboard-header">
 
                     </div>
                     <div className="dasboard-hero">
-                        <DashboardHero EurToUsd={EurToUsd} EurToRwf={EurToRwf} EurToYuan={EurToYuan}
-                            showInventory={showInventory} showProduct={showProduct} showBrand={showBrand} 
-                            onClickInventory={onClickInventory} onClickProduct={onClickProduct} onClickBrand={onClickBrand}/>
-                        <ProductHero/>
-                        <InventoryHero/>
-                        <BrandHero/>
+                        {showDashboardComponent?
+                            <DashboardHero EurToUsd={EurToUsd} EurToRwf={EurToRwf} EurToYuan={EurToYuan}
+                                showInventoryTable={showInventoryTable} showProductTable={showProductTable} showBrandTable={showBrandTable} 
+                                onClickInventoryTableOption={onClickInventoryTableOption} onClickProductTableOption={onClickProductTableOption} 
+                                onClickBrandTableOption={onClickBrandTableOption}/>
+                        :null}
+                        {showInventoryComponent?
+                            <InventoryHero/>
+                        :null}
+                        {showProductComponent? 
+                            <ProductHero/>
+                        :null}
+                        {showBrandComponent? 
+                            <BrandHero/>
+                        :null}
                     </div>
                     
                 </div>

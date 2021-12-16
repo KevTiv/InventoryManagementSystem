@@ -10,7 +10,7 @@ CREATE TABLE "product_table" (
     "product_gen_characteristic" TEXT NOT NULL,
     "date_created" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "product_factory_price" INTEGER DEFAULT 1,
-    "currency" TEXT,
+    "currency" TEXT DEFAULT E'EUR',
     "product_weight" INTEGER DEFAULT 1,
     "product_coutry_of_origin" TEXT,
     "product_sell_unit" TEXT,
@@ -43,6 +43,7 @@ CREATE TABLE "order_table" (
     "order_import_cost" INTEGER DEFAULT 0,
     "order_tax_cost" INTEGER DEFAULT 0,
     "order_total_cost" INTEGER DEFAULT 0,
+    "currency" TEXT DEFAULT E'EUR',
     "order_is_incomming" BOOLEAN DEFAULT true,
     "order_emmitted_date" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
     "order_delivery_date" TIMESTAMP(3),
@@ -57,12 +58,13 @@ CREATE TABLE "inventory_table" (
     "product_id" INTEGER NOT NULL,
     "order_id" INTEGER,
     "inventory_price" INTEGER,
+    "currency" TEXT DEFAULT E'EUR',
     "product_brand_id" INTEGER,
     "date_created" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
     "inventory_quantity" INTEGER NOT NULL DEFAULT 1,
     "last_updated" TIMESTAMP(3) NOT NULL,
     "agent_id" INTEGER,
-    "product_mouvement" JSONB NOT NULL,
+    "product_mouvement" JSONB,
 
     CONSTRAINT "inventory_table_pkey" PRIMARY KEY ("inventory_id")
 );

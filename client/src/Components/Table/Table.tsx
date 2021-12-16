@@ -1,36 +1,30 @@
 import { useEffect, useState } from 'react';
+import { Icon } from '@iconify/react';
+import deleteIcon from '@iconify/icons-fluent/delete-48-filled';
 import '../../Styles/Components/Table.scss';
-import {brandsApiCallProps, productsApiCallProps} from '../Hero/DashboardHero';
+import {brandsAPICallProps, productsAPICallProps, inventoryAPICallProps} from '../Hero/DashboardHero';
+import { JsxElement } from 'typescript';
 
 type tableProps ={
     colHeaders ?: Array<string>,
-    brandData ?: brandsApiCallProps[],
-    showBrand ?: boolean,
-    showProduct ?: boolean,
-    showInventory ?: boolean
-}
-type brandDataProps ={
-    brand_id: number,
-    brand_name: string,
-    industry: string,
-    brand_country_of_origin: string,
-    product_ref: string,
-    product_name: string,
-    product_brand_id: number,
-    product_category: string,
-    product_price: number
+    brandData ?: brandsAPICallProps[],
+    productData ?: productsAPICallProps[],
+    inventoryData ?: inventoryAPICallProps[],
+    showBrandTable ?: boolean,
+    showProductTable ?: boolean,
+    showInventoryTable ?: boolean,
 }
 
-const Table = ({colHeaders, brandData, showBrand, showProduct, showInventory}:tableProps) => {
+const Table = ({colHeaders, brandData, productData, inventoryData, showBrandTable, showProductTable, showInventoryTable}:tableProps) => {
     
     const BrandDataRows = ({brandData}:tableProps)=>{
         return(
             <>
-                {brandData && brandData.map((data:brandsApiCallProps)=>(
-                    <tr key={1}>
+                {brandData && brandData.map((data:brandsAPICallProps)=>(
+                    <tr key={data.brand_id}>
                         <td className="table-row-col">
                             <div className="table-row-col-img-container">
-                                <div className="table-name-container ">
+                                <div className="table-row-text-container">
                                     <div>
                                         {data.brand_name}
                                     </div>
@@ -39,7 +33,7 @@ const Table = ({colHeaders, brandData, showBrand, showProduct, showInventory}:ta
                         </td>
                         <td className="table-row-col">
                             <div className="table-row-col-img-container">
-                                <div className="table-name-container ">
+                                <div className="table-row-text-container">
                                     <div>
                                         {data.industry}
                                     </div>
@@ -48,7 +42,7 @@ const Table = ({colHeaders, brandData, showBrand, showProduct, showInventory}:ta
                         </td>
                         <td className="table-row-col">
                             <div className="table-row-col-img-container">
-                                <div className="table-name-container ">
+                                <div className="table-row-text-container">
                                     <div>
                                         {data.brand_country_of_origin}
                                     </div>
@@ -58,7 +52,7 @@ const Table = ({colHeaders, brandData, showBrand, showProduct, showInventory}:ta
                         <td
                         className="table-delete-container">
                         <a href="#">
-                            Delete
+                            <Icon icon={deleteIcon} />
                         </a>
                         </td>
                     </tr>
@@ -66,8 +60,128 @@ const Table = ({colHeaders, brandData, showBrand, showProduct, showInventory}:ta
             </>
         )
     }
-
-    console.log("Data passed: ",brandData);
+    const InventoryDataRows = ({inventoryData}:tableProps)=>{
+        return(
+            <>
+                {inventoryData && inventoryData.map((data:inventoryAPICallProps)=>(
+                    <tr key={data.product_id}>
+                        <td className="table-row-col">
+                            <div className="table-row-col-img-container">
+                                <div className="table-row-text-container">
+                                    <div>
+                                        {data.product_id}
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td className="table-row-col">
+                            <div className="table-row-col-img-container">
+                                <div className="table-row-text-container">
+                                    <div>
+                                        {data.product_brand_id}
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td className="table-row-col">
+                            <div className="table-row-col-img-container">
+                                <div className="table-row-text-container">
+                                    <div>
+                                        {data.inventory_quantity}
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td className="table-row-col">
+                            <div className="table-row-col-img-container">
+                                <div className="table-row-text-container">
+                                    <div>
+                                        {data.inventory_price}
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td className="table-row-col">
+                            <div className="table-row-col-img-container">
+                                <div className="table-row-text-container">
+                                    <div>
+                                        {data.last_updated}
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td
+                        className="table-delete-container ">
+                            <a href="#">
+                                <Icon icon={deleteIcon} />
+                            </a>
+                        </td>
+                    </tr>
+                ))}
+            </>
+        )
+    }
+    const ProductDataRows = ({productData}:tableProps)=>{
+        return(
+            <>
+                {productData && productData.map((data:productsAPICallProps)=>(
+                    <tr key={data.product_id}>
+                        <td className="table-row-col">
+                            <div className="table-row-col-img-container">
+                                <div className="table-row-text-container">
+                                    <div>
+                                        {data.product_ref}
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td className="table-row-col">
+                            <div className="table-row-col-img-container">
+                                <div className="table-row-text-container">
+                                    <div>
+                                        {data.product_name}
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td className="table-row-col">
+                            <div className="table-row-col-img-container">
+                                <div className="table-row-text-container">
+                                    <div>
+                                        {data.product_brand_id}
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td className="table-row-col">
+                            <div className="table-row-col-img-container">
+                                <div className="table-row-text-container">
+                                    <div>
+                                        {data.product_category}
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td className="table-row-col">
+                            <div className="table-row-col-img-container">
+                                <div className="table-row-text-container">
+                                    <div>
+                                        {data.product_price}
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td
+                        className="table-delete-container ">
+                            <a href="#">
+                                <Icon icon={deleteIcon} />
+                            </a>
+                        </td>
+                    </tr>
+                ))}
+            </>
+        )
+    }
     return (
         <>
             <div className="table">
@@ -83,20 +197,15 @@ const Table = ({colHeaders, brandData, showBrand, showProduct, showInventory}:ta
                                             </th>
                                             )
                                         )}
-                                        {/* <th scope="col" className="table-header-name">
-                                        Industry
-                                        </th>
-                                        <th scope="col" className="table-header-name">
-                                        Country of origin
-                                        </th> */}
                                         <th scope="col" className="table-header-del-option">
                                             <span>Delete</span>
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody className="table-body">
-                                    {showBrand? <BrandDataRows brandData={brandData}/>:null}
-                                    
+                                    {showInventoryTable ? <InventoryDataRows inventoryData={inventoryData}/>:null}
+                                    {showProductTable ? <ProductDataRows productData={productData}/>:null}
+                                    {showBrandTable? <BrandDataRows brandData={brandData}/>:null}
                                 </tbody>
                             </table>
                         </div>

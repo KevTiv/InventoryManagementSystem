@@ -1,11 +1,15 @@
 import express = require('express');
 import { PrismaClient } from '@prisma/client';
 
+// !important: MIGRATE PRISMA DB => " npx prisma migrate dev --name init "
 
 // Middleware configuration
 const app = express();
 const cors = require('cors');
-const prisma = new PrismaClient();
+const prisma = new PrismaClient({
+  errorFormat: 'pretty',
+  log: ['query', 'info', 'warn']
+});
 
 app.use(cors())
 app.use(express.json());

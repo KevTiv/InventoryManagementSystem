@@ -18,14 +18,14 @@ model product_table {
   product_brand_id           Int
   product_category           String?
   product_price              Int?     @default(1)
-  product_gen_description    String
-  product_gen_characteristic String
+  product_gen_description    String?
+  product_gen_characteristic String?
   date_created               DateTime @default(now())
   product_factory_price      Int?     @default(1)
-  currency                   String?
+  currency                   String?  @default("EUR")
   product_weight             Int?     @default(1)
   product_coutry_of_origin   String?
-  product_sell_unit          String?
+  product_sell_unit          String?  @default("Pieces")
   product_box_weight         Int?     @default(1)
   product_sku                String?  @unique
   product_min_quanity        Int?     @default(1)
@@ -33,6 +33,7 @@ model product_table {
   product_custom_border_id   String?  @unique
   product_box_quantity       Int?     @default(1)
   product_box_volume         Int?     @default(1)
+  product_img                String?
 
   //relation
   brand     brand_table       @relation(fields: [product_brand_id], references: [brand_id])
@@ -41,12 +42,17 @@ model product_table {
 
 //Brand database prisma schema
 model brand_table {
-  brand_id                Int             @id @default(autoincrement())
-  brand_name              String          @unique
+  brand_id                Int      @id @default(autoincrement())
+  brand_name              String   @unique
   brand_country_of_origin String?
   industry                String?
-  date_created            DateTime        @default(now())
-  product                 product_table[]
+  brand_img               String?
+  date_created            DateTime @default(now())
+
+
+  //relation
+  product   product_table[]
+  inventory inventory_table[]
 }
 
 //Order database prisma schema
@@ -56,6 +62,7 @@ model order_table {
   order_import_cost   Int?      @default(0)
   order_tax_cost      Int?      @default(0)
   order_total_cost    Int?      @default(0)
+  currency            String?   @default("EUR")
   order_is_incomming  Boolean?  @default(true)
   order_emmitted_date DateTime? @default(now())
   order_delivery_date DateTime?
@@ -69,16 +76,21 @@ model order_table {
 model inventory_table {
   inventory_id       Int       @id @default(autoincrement())
   product_id         Int       @unique
+  product_name       String
+  product_reference  String    @unique
   order_id           Int?
-  inventory_price    Int?
-  product_brand_id   Int?
+  inventory_price    Int
+  currency           String?   @default("EUR")
+  product_brand_id   Int
+  product_brand_name String
   date_created       DateTime? @default(now())
   inventory_quantity Int       @default(1)
-  last_updated       DateTime
+  last_updated       DateTime  @updatedAt
   agent_id           Int?
-  product_mouvement  Json
+  product_mouvement  Json?
 
   //relation
+  brand   brand_table   @relation(fields: [product_brand_id], references: [brand_id])
   product product_table @relation(fields: [product_id], references: [product_id])
   order   order_table?  @relation(fields: [order_id], references: [order_id])
 }
