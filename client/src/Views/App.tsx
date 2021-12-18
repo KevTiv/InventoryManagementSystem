@@ -5,16 +5,15 @@ import LandingPage from './Pages/LandingPage';
 import Dashboard from './Pages/Dashboard';
 import {handleGoogleAuth} from '../Provider/AuthProvider';
 import {useNavigate} from 'react-router-dom';
-
+import {appCheck} from '../Utils/Firebase/firebase';
 function App() {
   
   let navigate = useNavigate();
   const [currentYear, setCurrentYear] = useState<number>(0);
   const [showSigninModal, setShowSignin] = useState(false);
   const [signinMethod, setSignin] = useState("");
-
-  
   const [token, setToken] = useState<string|null>();
+
   const checkToken = ()=>{
     let authToken = sessionStorage.getItem('Auth Token');
     setToken(authToken)
@@ -37,7 +36,10 @@ function App() {
 
     currentYear();
   },[]);
-
+  useEffect(() => {
+      const GreCaptchatoken = appCheck;
+      console.log('GreCaptchatoken', GreCaptchatoken)
+  });
 
   return (
     <div className="App">

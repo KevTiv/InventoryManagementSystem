@@ -76,13 +76,10 @@ model order_table {
 model inventory_table {
   inventory_id       Int       @id @default(autoincrement())
   product_id         Int       @unique
-  product_name       String
-  product_reference  String    @unique
   order_id           Int?
   inventory_price    Int
   currency           String?   @default("EUR")
   product_brand_id   Int
-  product_brand_name String
   date_created       DateTime? @default(now())
   inventory_quantity Int       @default(1)
   last_updated       DateTime  @updatedAt

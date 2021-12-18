@@ -59,7 +59,10 @@
     @apply flex items-center;
 }
 .table-img-container{
-    @apply flex-shrink-0 h-10 w-10;
+    @apply flex-shrink-0 h-10 w-10 m-1;
+    & img{
+        @apply rounded-full;
+    }
 }
 .in-row-img{
     @apply h-10 w-10 rounded-full;
@@ -67,6 +70,9 @@
 .table-row-text-container {
     @apply ml-0;
     & div{
+        max-width: max(250px, 18rem);
+        overflow-x: auto;
+        scrollbar-width: none;
         color: var(--dashboard-text);
         @apply text-sm font-medium;
     }

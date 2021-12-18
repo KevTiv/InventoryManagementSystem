@@ -1,5 +1,5 @@
-import '../../Styles/Views/Pages/DashboardPage.scss'
-
+//import '../../Styles/Views/Pages/DashboardPage.scss';
+import '../../Styles/Components/Sidebar.scss';
 type sidebarProps ={
     onClickShowDashboardComponent: () => void,
     onClickShowProductComponent: () => void,

@@ -3,7 +3,6 @@ import { Icon } from '@iconify/react';
 import deleteIcon from '@iconify/icons-fluent/delete-48-filled';
 import '../../Styles/Components/Table.scss';
 import {brandsAPICallProps, productsAPICallProps, inventoryAPICallProps} from '../Hero/DashboardHero';
-import { JsxElement } from 'typescript';
 
 type tableProps ={
     colHeaders ?: Array<string>,
@@ -24,6 +23,9 @@ const Table = ({colHeaders, brandData, productData, inventoryData, showBrandTabl
                     <tr key={data.brand_id}>
                         <td className="table-row-col">
                             <div className="table-row-col-img-container">
+                                <div className="table-img-container">
+                                    <img src={data.brand_img} alt={data.brand_img} />
+                                </div>
                                 <div className="table-row-text-container">
                                     <div>
                                         {data.brand_name}
@@ -60,16 +62,28 @@ const Table = ({colHeaders, brandData, productData, inventoryData, showBrandTabl
             </>
         )
     }
-    const InventoryDataRows = ({inventoryData}:tableProps)=>{
+    const InventoryDataRows = ({inventoryData, productData, brandData}:tableProps)=>{
+        // console.log("inventoryData: ", inventoryData, "productData: ", productData, "brandData: ",brandData);
         return(
             <>
                 {inventoryData && inventoryData.map((data:inventoryAPICallProps)=>(
-                    <tr key={data.product_id}>
+                    <tr key={data.inventory_id}>
                         <td className="table-row-col">
                             <div className="table-row-col-img-container">
+                                <div className="table-img-container">
+                                    {productData && productData.map((prod)=>(
+                                        (prod.product_id === data.product_id)?
+                                            <img src={prod.product_img} alt={prod.product_name} /> : null
+                                    ))}
+                                </div>
+                                
                                 <div className="table-row-text-container">
                                     <div>
-                                        {data.product_id}
+                                        {productData && productData.map((prod)=>(
+                                            (prod.product_id === data.product_id)?
+                                                <span>{prod.product_ref} - {prod.product_name}</span> : null
+                                        ))}
+                                        {/* {data.product_id} */}
                                     </div>
                                 </div>
                             </div>
@@ -78,7 +92,11 @@ const Table = ({colHeaders, brandData, productData, inventoryData, showBrandTabl
                             <div className="table-row-col-img-container">
                                 <div className="table-row-text-container">
                                     <div>
-                                        {data.product_brand_id}
+                                        {brandData && brandData.map((brand)=>(
+                                            (brand.brand_id === data.product_brand_id)?
+                                                brand.brand_name : null
+                                        ))}
+                                        {/* {data.product_brand_id} */}
                                     </div>
                                 </div>
                             </div>
@@ -128,6 +146,9 @@ const Table = ({colHeaders, brandData, productData, inventoryData, showBrandTabl
                     <tr key={data.product_id}>
                         <td className="table-row-col">
                             <div className="table-row-col-img-container">
+                                <div className="table-img-container">
+                                    <img src={data.product_img} alt={data.product_name} />
+                                </div>
                                 <div className="table-row-text-container">
                                     <div>
                                         {data.product_ref}
@@ -203,7 +224,7 @@ const Table = ({colHeaders, brandData, productData, inventoryData, showBrandTabl
                                     </tr>
                                 </thead>
                                 <tbody className="table-body">
-                                    {showInventoryTable ? <InventoryDataRows inventoryData={inventoryData}/>:null}
+                                    {showInventoryTable ? <InventoryDataRows inventoryData={inventoryData} brandData={brandData} productData={productData}/>:null}
                                     {showProductTable ? <ProductDataRows productData={productData}/>:null}
                                     {showBrandTable? <BrandDataRows brandData={brandData}/>:null}
                                 </tbody>

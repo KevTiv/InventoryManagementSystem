@@ -3,6 +3,7 @@ import CurrencyCard from '../Cards/CurrencyCard';
 import {Icon} from '@iconify/react';
 import Menu from '@iconify/icons-dashicons/menu';
 import Table from '../Table/Table';
+import { appCheck } from '../../Utils/Firebase/firebase';
 // import {productsAPICallProps,brandsAPICallProps,  inventoryAPICallProps} from '../../Utils/ServerFunction/ServerCalls';
 
 type dashboardProps={
@@ -37,7 +38,8 @@ export type productsAPICallProps ={
     product_volume: number,
     product_custom_border_id?: string,
     product_box_quantity: number,
-    product_box_volume: number
+    product_box_volume: number,
+    product_img?: string 
 }
 
 export type brandsAPICallProps ={
@@ -46,6 +48,7 @@ export type brandsAPICallProps ={
     brand_country_of_origin?: string,
     industry?: string,
     date_created: Date,
+    brand_img?: string
 }
 
 export type inventoryAPICallProps ={
@@ -69,7 +72,7 @@ const DashboardHero = (
         showProductTable, showBrandTable, onClickInventoryTableOption, 
         onClickProductTableOption, onClickBrandTableOption}:dashboardProps) => {
     
-    const axios = require('axios').default;
+    //const axios = require('axios').default;
 
     const brandTableHeaders:string[] = ["Name", "Industry", "Country Of Origin"];
     const productTableHeaders: string[] = ["Reference", "Name", "Brand", "Category", "Price"];
@@ -80,7 +83,7 @@ const DashboardHero = (
     const [inventoryData, setInventoryData] = useState<inventoryAPICallProps[]>();
     
     useEffect(() => {
-        
+        const axios = require('axios').default;
         const fetchBrandData = async ()=>{ 
             await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/brand`)
                 .then((res: any)=>{
@@ -94,10 +97,10 @@ const DashboardHero = (
                 })
         }
         fetchBrandData();
-    },[ showBrandTable]);
+    },[ showBrandTable,showInventoryTable]);
 
     useEffect(() => {
-        
+        const axios = require('axios').default;
         const fetchProductData = async ()=>{ 
             await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/product`)
                 .then((res: any)=>{
@@ -110,16 +113,15 @@ const DashboardHero = (
                 })
         }
         fetchProductData();
-    },[showProductTable]);
+    },[showProductTable,showInventoryTable]);
 
     useEffect(() => {
-        
+        const axios = require('axios').default;
         const fetchInventory = async ()=>{
             await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/inventory`)
                 .then((res: any)=>{
                     const data = res.data;
                     setInventoryData(data);
-                    console.log("productData: ",inventoryData);
                 })
                 .catch((err: any)=>{
                     console.error(err);
@@ -127,7 +129,10 @@ const DashboardHero = (
         }
         fetchInventory();
     },[showInventoryTable]);
-
+    useEffect(() => {
+        const GreCaptchatoken = appCheck;
+        console.log('GreCaptchatoken', GreCaptchatoken)
+    });
     return (
         <>
             <div>
@@ -166,7 +171,8 @@ const DashboardHero = (
                     <div className="tables-view">
                         {/* {showInventoryTable?<InventoryTable/>:null} */}
                         {showInventoryTable?
-                            <Table colHeaders={inventoryTableHeaders} inventoryData={inventoryData} showInventoryTable={showInventoryTable}/>
+                            <Table colHeaders={inventoryTableHeaders} inventoryData={inventoryData} 
+                                productData={productData} brandData={brandData} showInventoryTable={showInventoryTable}/>
                         :null}
                         {showProductTable?
                             <Table colHeaders={productTableHeaders} productData={productData} showProductTable={showProductTable}/>

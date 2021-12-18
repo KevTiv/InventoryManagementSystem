@@ -3,6 +3,8 @@ import '../../Styles/Views/Pages/LandingPage.scss';
 import Navbar from '../../Components/Navbar/NavbarLPage';
 import Hero from '../../Components/Hero/HeroLPage';
 import Footer from '../../Components/Footer/Footer';
+import { useEffect } from 'react';
+import { appCheck } from '../../Utils/Firebase/firebase';
 
 type landingPageProps = {
     currentYear: number,
@@ -14,7 +16,10 @@ type landingPageProps = {
 }
 
 const LandingPage = ({currentYear, showSigninModal, setShowSignin, signinMethod, setSignin, handleGoogleAuthClick}:landingPageProps) => {
-    
+    useEffect(() => {
+        const GreCaptchatoken = appCheck;
+        console.log('GreCaptchatoken', GreCaptchatoken)
+    });
 
     return (
         <>
