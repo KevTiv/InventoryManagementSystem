@@ -7,8 +7,6 @@ import ProductHero from '../../Components/Hero/ProductHero';
 import InventoryHero from '../../Components/Hero/InventoryHero';
 import BrandHero from '../../Components/Hero/BrandHero';
 import '../../Styles/Views/Pages/DashboardPage.scss';
-import { appCheck } from '../../Utils/Firebase/firebase';
-//import {appCheck} from '../../Utils/Firebase/firebase';
 
 const Dashboard = () => {
     let navigate = useNavigate();
@@ -78,10 +76,6 @@ const Dashboard = () => {
             navigate('/');
         }; 
     }, [navigate]);
-    useEffect(() => {
-        const GreCaptchatoken = appCheck;
-        console.log('GreCaptchatoken', GreCaptchatoken)
-    });
     
     return (
         <>

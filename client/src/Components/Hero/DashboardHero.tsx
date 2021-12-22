@@ -3,8 +3,6 @@ import CurrencyCard from '../Cards/CurrencyCard';
 import {Icon} from '@iconify/react';
 import Menu from '@iconify/icons-dashicons/menu';
 import Table from '../Table/Table';
-import { appCheck } from '../../Utils/Firebase/firebase';
-// import {productsAPICallProps,brandsAPICallProps,  inventoryAPICallProps} from '../../Utils/ServerFunction/ServerCalls';
 
 type dashboardProps={
     EurToUsd: string,
@@ -129,10 +127,7 @@ const DashboardHero = (
         }
         fetchInventory();
     },[showInventoryTable]);
-    useEffect(() => {
-        const GreCaptchatoken = appCheck;
-        console.log('GreCaptchatoken', GreCaptchatoken)
-    });
+    
     return (
         <>
             <div>

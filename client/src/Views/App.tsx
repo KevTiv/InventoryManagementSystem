@@ -5,7 +5,6 @@ import LandingPage from './Pages/LandingPage';
 import Dashboard from './Pages/Dashboard';
 import {handleGoogleAuth} from '../Provider/AuthProvider';
 import {useNavigate} from 'react-router-dom';
-import {appCheck} from '../Utils/Firebase/firebase';
 function App() {
   
   let navigate = useNavigate();
@@ -36,10 +35,6 @@ function App() {
 
     currentYear();
   },[]);
-  useEffect(() => {
-      const GreCaptchatoken = appCheck;
-      console.log('GreCaptchatoken', GreCaptchatoken)
-  });
 
   return (
     <div className="App">

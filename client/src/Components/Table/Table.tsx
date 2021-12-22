@@ -24,7 +24,7 @@ const Table = ({colHeaders, brandData, productData, inventoryData, showBrandTabl
                         <td className="table-row-col">
                             <div className="table-row-col-img-container">
                                 <div className="table-img-container">
-                                    <img src={data.brand_img} alt={data.brand_img} />
+                                    <img src={data.brand_img} alt="" />
                                 </div>
                                 <div className="table-row-text-container">
                                     <div>
@@ -73,7 +73,7 @@ const Table = ({colHeaders, brandData, productData, inventoryData, showBrandTabl
                                 <div className="table-img-container">
                                     {productData && productData.map((prod)=>(
                                         (prod.product_id === data.product_id)?
-                                            <img src={prod.product_img} alt={prod.product_name} /> : null
+                                            <img src={prod.product_img} alt="" /> : null
                                     ))}
                                 </div>
                                 
@@ -147,7 +147,7 @@ const Table = ({colHeaders, brandData, productData, inventoryData, showBrandTabl
                         <td className="table-row-col">
                             <div className="table-row-col-img-container">
                                 <div className="table-img-container">
-                                    <img src={data.product_img} alt={data.product_name} />
+                                    <img src={data.product_img} alt="" />
                                 </div>
                                 <div className="table-row-text-container">
                                     <div>

@@ -1,126 +1,185 @@
-import React, { useState } from 'react'
-import { useFormik } from 'formik';
-import { ref, uploadBytesResumable, getDownloadURL, uploadBytes } from "firebase/storage";
+import '../../Styles/Components/BrandForm.scss';
+import {useForm} from 'react-hook-form';
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import {storage} from '../../Utils/Firebase/firebase';
+import { useGoogleReCaptcha} from 'react-google-recaptcha-v3';
+import { useCallback, useEffect, useState } from 'react';
 
+type brandDormData ={
+    brand_name: string,
+    brand_country_of_origin: string,
+    industry: string,
+    brand_img: string,
+    img_file: File
+}
+type newBrandObject ={
+    brand_name: string,
+    brand_country_of_origin: string,
+    industry: string,
+    brand_img: string,
+}
 export const AddBrandForm = () => {
     const axios = require('axios').default;
-    const [file, setFile] = useState<File>();
-    const [imgUrl, setImgUrl] = useState<string>();
+    const [token, setToken] = useState<string>();
+    const [isDatacomplete, setIsDatacomplete] = useState<boolean>(false);
+    const {register, handleSubmit, setValue} = useForm<brandDormData>();
+    const { executeRecaptcha } = useGoogleReCaptcha();
 
-    const onChangeImgageFile = (event: React.FormEvent) => {
-        const files = (event.target as HTMLInputElement).files
-
-        if (files && files.length > 0) {
-            setFile(files[0])
-        }
-        console.log(file);
+    let newBrand:newBrandObject={
+        'brand_name':'',
+        'brand_country_of_origin':'',
+        'industry':'',
+        'brand_img': '',
     }
-    const uploadImage =(file:File, name:string) => {
-        const storageRef = ref(storage, 'images');
-        const spaceRef = ref(storage, `images/${name}`);
-        const metadata = {
-            // contentType: 'image/jpeg',
-            contentType: file.type,
-        };
 
-        const uploadTask = uploadBytesResumable(spaceRef, file, metadata);
-        console.log('uploadTask : ', uploadTask)
-        uploadTask.on('state_changed', 
-            (snapshot: { bytesTransferred: number; totalBytes: number; state: any; }) => {
-                // Observe state change events such as progress, pause, and resume
-                // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                console.log('Upload is ' + progress + '% done');
-                switch (snapshot.state) {
-                case 'paused':
-                    console.log('Upload is paused');
-                    break;
-                case 'running':
-                    console.log('Upload is running');
-                    break;
+    const handleReCaptchaVerify = useCallback(async () => {
+            if (!executeRecaptcha) {
+            console.log('Execute recaptcha not yet available');
+            return;
+            }
+            const token = await executeRecaptcha('yourAction');
+            setToken(token);
+    }, []);
+    useEffect(() => {
+        handleReCaptchaVerify();
+    }, [handleReCaptchaVerify]);
+
+    const uploadImage = (file:File, name:string) => {
+            //const storageRef = ref(storage, 'images');
+            console.log(file.type, '<-- type');
+            const spaceRef = ref(storage, `image/brands/${name}`);
+            const metadata = {
+                // contentType: 'image/jpeg',
+                contentType: file.type,
+            };
+            
+            const uploadTask = uploadBytesResumable(spaceRef, file, metadata);
+            console.log('uploadTask : ', uploadTask)
+            uploadTask.on('state_changed', 
+                (snapshot: { bytesTransferred: number; totalBytes: number; state: any; }) => {
+                    // Observe state change events such as progress, pause, and resume
+                    // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    console.log('Upload is ' + progress + '% done');
+                    switch (snapshot.state) {
+                    case 'paused':
+                        console.log('Upload is paused');
+                        break;
+                    case 'running':
+                        console.log('Upload is running');
+                        break;
+                    }
+                }, 
+                (error:any) => {
+                    // Handle unsuccessful uploads
+                }, 
+                () => {
+                    console.log('uploadTask2 : ', uploadTask)
+                    
+                    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                        console.log('File available at', downloadURL);
+                        console.log('uploadTask.snapshot.ref: ',uploadTask.snapshot.ref);
+                        //setImgUrl(downloadURL);
+                        setValue('brand_img', downloadURL);
+                        
+                    }).catch((error) => {
+                        switch (error.code) {
+                            case 'storage/object-not-found':
+                                console.log('File doesn\'t exist');
+                                break;
+                            case 'storage/unauthorized':
+                                console.log('User doesn\'t have permission to access the object');
+                                break;
+                            case 'storage/canceled':
+                                console.log('User canceled the upload');
+                                break;
+                            case 'storage/unknown':
+                                console.log('Unknown error occurred, inspect the server response')
+                                break;
+                        }
+                    });
+                    
                 }
-            }, 
-            (error:any) => {
-                // Handle unsuccessful uploads
-            }, 
-            () => {
-                console.log('uploadTask2 : ', uploadTask)
-                // Handle successful uploads on complete
-                // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-                getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                    console.log('File available at', downloadURL);
-                    setImgUrl(downloadURL);
-                });
-            }
-        );
-        console.log('uploadTask3 : ', uploadTask)
+            );
     }
-    const formik = useFormik({
-        initialValues:{
-            brand_name: '',              
-            brand_country_of_origin: '', 
-            industry: '',             
-            brand_img: '',               
-        },onSubmit: async (values) =>{
-            if(file && file !== undefined) {
-                uploadImage(file, values.brand_name);
-                values.brand_img = imgUrl!;
-            }
-            // await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/brand`,values)
-            //     .then(function (res: any){
-            //         console.log("res: ",res);
-            //     }).catch(function(err: any){
-            //         console.error("err: ",err);
-            //     });
-        }
-    })
 
+    const onSubmit = handleSubmit(async (data:brandDormData) => {
+        
+        if(token && token !== undefined && data.img_file  && data.img_file !== undefined){
+            axios.post(`${process.env.REACT_APP_SERVER_URL}/api/verify_token`,{
+                request:{
+                    token
+                }
+            }).then(async function (res:any){
+                console.log('verifyRes: ', res.data.score);
+                console.log(res);
+                if(res.data.score > 0.5){
+                    const file:any = data.img_file;
+                    uploadImage(file[0], data.brand_name);
+                }
+                setIsDatacomplete(true);
+                // return res.data.score;
+            }).catch(function(err: any){
+                console.error("err: ",err);
+                // return err;
+            });
+        }
+        if(isDatacomplete){
+             newBrand.brand_name = data.brand_name
+            newBrand.brand_country_of_origin = data.brand_country_of_origin;
+            newBrand.industry = data.industry;
+            newBrand.brand_img = data.brand_img;
+
+            await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/brand`,newBrand)
+            .then(function (res: any){
+                console.log("res: ",res);
+            }).catch(function(err: any){
+                console.error("err: ",err);
+            });
+        }
+    });
     return (
         <>
-            <form className="w-72" onSubmit={formik.handleSubmit}>
-                <div className="flex flex-col">
-                    <label htmlFor="brand_name">Name</label>
+            <form className="add-brand-form" onSubmit={onSubmit}> 
+                <div className="input-form">
+                    <label className="input-form-label" htmlFor="brand_name">Name</label>
                     <input
+                        className="input-form-text-input"
                         id="brand_name"
-                        name="brand_name"
                         type="text"
-                        onChange={formik.handleChange}
-                        value={formik.values.brand_name}
+                        {...register("brand_name")} 
                     />
 
-                    <label htmlFor="brand_country_of_origin">Country of origin</label>
+                    <label className="input-form-label" htmlFor="brand_country_of_origin">Country of origin</label>
                     <input
+                        className="input-form-text-input"
                         id="brand_country_of_origin"
-                        name="brand_country_of_origin"
                         type="text"
-                        onChange={formik.handleChange}
-                        value={formik.values.brand_country_of_origin}
+                        {...register("brand_country_of_origin")} 
                     />
 
-                    <label htmlFor="industry">Industry</label>
+                    <label className="input-form-label" htmlFor="industry">Industry</label>
                     <input
+                        className="input-form-text-input"
                         id="industry"
-                        name="industry"
                         type="text"
-                        onChange={formik.handleChange}
-                        value={formik.values.industry}
+                        {...register("industry")} 
                     />
-
-                    <label htmlFor="img_file">Image file</label>
-                    <input
-                        id="img_file"
-                        name="img_file"
-                        type="file"
-                        onChange={onChangeImgageFile}
-                        accept=".jpg, .png"
-                    />
+                    <div className="input-form-fil-input">
+                        <label className="input-form-label" htmlFor="img_file">Image file</label>
+                        <input
+                            
+                            id="img_file"
+                            type="file"
+                            accept=".jpg, .png"
+                            {...register("img_file")} 
+                        />
+                    </div>
+                    
                 </div>
-                <div className="flex align-center justify-center">
-                    <button 
-                        type="submit"
-                        data-sitekey="reCAPTCHA_site_key" 
-                        data-callback='onSubmit' 
+                <div className="input-form-submit-button">
+                    <button
+                        onClick={handleReCaptchaVerify}
                     >
                         Submit
                     </button>
@@ -129,5 +188,3 @@ export const AddBrandForm = () => {
         </>
     )
 }
-
-

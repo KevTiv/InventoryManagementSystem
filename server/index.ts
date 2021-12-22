@@ -1,11 +1,11 @@
 import express = require('express');
 import { PrismaClient } from '@prisma/client';
-
 // !important: create MIGRATE PRISMA DB => " npx prisma migrate dev --name init "
 
 // Middleware configuration
 const app = express();
 const cors = require('cors');
+const axios = require('axios').default;
 const prisma = new PrismaClient({
   errorFormat: 'pretty',
   log: ['query', 'info', 'warn']
@@ -22,6 +22,30 @@ app.listen(port, () => {
   console.log(`Server Running at ${port} 🚀`);
 });
 
+//Verify app request to filter out BOT requests
+// app.post('/api/checkrequest/[:token]',async (req:express.Request,  res:express.Response) => {
+//   const secret = process.env.RECAPTCHA_SECRET_KEY;
+//   const token = req.params.token;
+
+// })
+app.post('/api/verify_token',async (req:express.Request,  res:express.Response) => {
+  const verifyRequestToken = ({data: req.body});
+  const token = verifyRequestToken.data.request.token;
+  const secret = process.env.RECAPTCHA_SECRET_KEY;
+  await axios.post(`https://www.google.com/recaptcha/api/siteverify?secret=${secret}&response=${token}`,{
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded; charset=utf-8"
+    }
+  }).then(response => {
+    //console.log('response: ', response.data.success, 'Score: ', response.data.score);
+    res.json(response.data);
+  }).catch(err => {
+    //console.error('error: ', err);
+    res.json(err);
+  });
+  
+  
+})
 
 //CREATE ROUTES
 //add new product
