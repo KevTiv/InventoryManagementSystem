@@ -1,5 +1,6 @@
-@use '../mixins/darkMode' as *;
-@use  '../mixins/Form' as *;
+@use '../mixins/darkMode'as *;
+@use '../mixins/Form'as *;
+
 :root {
     --dashboard-text: #22223b;
     --component-form-background: rgba(255, 255, 255, .15);
@@ -19,13 +20,43 @@
     }
 }
 
-.add-brand-form {
+.add-product-form {
     @include Form;
     background-color: var(--component-form-background);
     border-color: var(--border-color);
-    @apply w-6/12 m-2 flex flex-col justify-center rounded-lg p-8 py-10 shadow-lg;
-    & h1{
+    max-width: 80rem;
+    @apply col-span-11 mx-2 pr-2 rounded-lg py-10 shadow-lg flex flex-col;
+
+    & h1 {
         color: var(--dashboard-text);
-        @apply text-3xl flex align-middle justify-center w-full ;
+        @apply text-3xl w-full flex justify-center align-middle my-3;
     }
+}
+
+.prod-input-container {
+    @apply flex w-full p-2 my-2;
+    & div{
+        @apply w-6/12 ml-6;
+        & label{
+            @apply justify-start;
+        }
+    }
+}
+.small-input-page{
+    @apply my-20;
+}
+.prod-ref {
+    @apply w-3/4 ml-6;
+}
+.prod-name-brand{
+}
+.prod-cat-price{
+}
+.prod-charact-description div input{
+    max-width: 30rem;
+    height: 10rem;
+}
+.add-product-tab{
+     background-color: var(--component-form-background);
+    @apply flex p-1 space-x-1 rounded-xl w-10/12 mx-auto my-3;
 }

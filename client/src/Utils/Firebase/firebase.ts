@@ -2,6 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getStorage } from "firebase/storage";
 // const { initializeAppCheck, ReCaptchaV3Provider, getToken } = require("firebase/app-check");
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -33,7 +34,68 @@ const app = initializeApp(firebaseConfig);
 //     console.error(err.message)
 //   })
 // } 
+export const uploadImage = (file:File, name:string, destination:string, setURL:(downloadURL:string)=>void, setUploadComplete: () => void) => {
 
+    //const storageRef = ref(storage, 'images');
+    console.log(file.type, '<-- type');
+    // const spaceRef = ref(storage, `image/brands/${name}`);
+    const spaceRef = ref(storage, `${destination}${name}`);
+    const metadata = {
+        // contentType: 'image/jpeg',
+        contentType: file.type,
+    };
+    
+    const uploadTask = uploadBytesResumable(spaceRef, file, metadata);
+    console.log('uploadTask : ', uploadTask)
+    uploadTask.on('state_changed', 
+        (snapshot: { bytesTransferred: number; totalBytes: number; state: any; }) => {
+            // Observe state change events such as progress, pause, and resume
+            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log('Upload is ' + progress + '% done');
+            switch (snapshot.state) {
+            case 'paused':
+                console.log('Upload is paused');
+                break;
+            case 'running':
+                console.log('Upload is running');
+                break;
+            }
+        }, 
+        (error:any) => {
+            // Handle unsuccessful uploads
+            console.error(error);
+        }, 
+        () => {
+            console.log('uploadTask2 : ', uploadTask)
+            
+            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                console.log('File available at', downloadURL);
+                console.log('uploadTask.snapshot.ref: ',uploadTask.snapshot.ref);
+                //setImgUrl(downloadURL);
+                // setValue('brand_img', downloadURL);
+                setURL(downloadURL);
+                setUploadComplete();
+            }).catch((error) => {
+                switch (error.code) {
+                    case 'storage/object-not-found':
+                        console.log('File doesn\'t exist');
+                        break;
+                    case 'storage/unauthorized':
+                        console.log('User doesn\'t have permission to access the object');
+                        break;
+                    case 'storage/canceled':
+                        console.log('User canceled the upload');
+                        break;
+                    case 'storage/unknown':
+                        console.log('Unknown error occurred, inspect the server response')
+                        break;
+                }
+            });
+            
+        }
+    );
+};
 export const storage = getStorage(app);
 export const auth = getAuth(app);
 export default app;

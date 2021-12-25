@@ -1,4 +1,4 @@
-
+import AddProductForm from "../Forms/AddProductForm";
 
 const ProductHero = () => {
     return (
@@ -6,6 +6,7 @@ const ProductHero = () => {
             <div>
                 Product
             </div>
+            <AddProductForm/>
         </>
     )
 }

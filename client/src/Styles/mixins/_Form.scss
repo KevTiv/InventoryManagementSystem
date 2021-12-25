@@ -1,0 +1,35 @@
+@mixin Form{
+    .input-form {
+        @apply flex flex-col;
+    }
+
+    .input-form-label {
+        color: var(--dashboard-text);
+        @apply text-xl mx-24;
+    }
+
+    .input-form-text-input {
+        @apply border border-gray-600 text-lg pl-3 py-1 shadow-sm bg-white rounded w-3/4 mx-auto;
+
+        &:focus {
+            border-color: var(--input-focus-broder);
+        }
+    }
+
+    .input-form-submit-button {
+        @apply flex align-middle justify-end;
+    }
+
+    .input-form-file-input {
+        color: var(--dashboard-text);
+        @apply flex align-middle justify-start mt-6;
+    }
+
+    .input-form-submit-button button {
+        @apply bg-green-500 border-green-700 text-gray-200 rounded-lg w-28 h-10 text-lg mr-20 mt-8;
+
+        &:hover {
+            @apply bg-green-700 text-gray-100;
+        }
+    }
+}

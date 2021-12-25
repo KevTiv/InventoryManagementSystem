@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@craco/craco": "^6.4.2",
+    "@headlessui/react": "^1.4.2",
     "@iconify/icons-dashicons": "^1.1.0",
     "@iconify/icons-emojione-monotone": "^1.1.0",
     "@iconify/icons-fluent": "^1.1.33",

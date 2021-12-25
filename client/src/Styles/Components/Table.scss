@@ -18,7 +18,8 @@
 
 .table{
     background-color: var(--component-table-background);
-    @apply flex flex-col my-8 mx-8 text-left;
+    max-height: 45rem;
+    @apply flex flex-col my-8 mx-8 text-left h-auto;
 }
 .table-container {
     @apply -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8;
@@ -34,7 +35,10 @@
     @apply min-w-full divide-y divide-gray-900;
 }
 .table-header-body{
+    //position: fixed;
+    //z-index: 10;
     background-color: var(--component-table-background);
+    @apply min-w-max;
 }
 .table-header-name{
     color: var(--dashboard-text);
@@ -50,7 +54,11 @@
 //Table rows
 .table-body{
     background-color: var(--component-table-background);
-    @apply divide-y divide-gray-900;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    max-height: 15rem;
+    //position: absolute;
+    @apply divide-y divide-gray-900 h-auto;
 }
 .table-row-col{
     @apply px-6 py-4 whitespace-nowrap;
