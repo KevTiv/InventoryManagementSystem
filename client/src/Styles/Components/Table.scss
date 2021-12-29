@@ -18,7 +18,7 @@
 
 .table{
     background-color: var(--component-table-background);
-    max-height: 45rem;
+    max-height: 40rem;
     @apply flex flex-col my-8 mx-8 text-left h-auto;
 }
 .table-container {

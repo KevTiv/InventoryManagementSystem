@@ -48,9 +48,12 @@
 }
 .LandingPage{
     width:100%;
-    height: auto;
-    overflow-y: hidden;
-    overflow-x: scroll;
+    height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 .LandingPage-Navbar{
     @include Navbar;
@@ -94,27 +97,26 @@
     &-login{
         @include button;
         border-color: var(--button-login-border-color);
-
         &:hover{
-            @apply border-blue-600 border-4;
-            background: var(--button-hover);
+            @apply border-blue-600 border-4 shadow-2xl;
+            //background: var(--button-hover);
         }
     }
-    &-signup{
-        @include button;
-        border-color: var(--button-signup-border-color);
+    // &-signup{
+    //     @include button;
+    //     border-color: var(--button-signup-border-color);
 
-        &:hover{
-            @apply border-yellow-600 border-4;
-            background: var(--button-hover);
-        }
-    }
+    //     &:hover{
+    //         @apply border-yellow-600 border-4;
+    //         background: var(--button-hover);
+    //     }
+    // }
 }
 
 .LandingPage-Hero{
-    height: 70vh;
+    height: auto;
     display: grid;
-
+    margin: 0 1rem;
     @apply grid-cols-2;
     @include mobile{
         margin-top: 2rem;
@@ -138,27 +140,7 @@
         display: block;
         position: relative;
         @apply text-5xl;
-        &::after{
-            
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 0.05em;
-            background-color: var(--hero-cta-hover-underline);
-            opacity: 0;
-            transition: opacity 300ms,
-            transform 300ms;
-
-            opacity: 1;
-            transform: scale(0);
-            transform-origin: center;
-        }
-
-        &:hover::after, &:focus::after{
-            transform: scale(1);
-        }
+       
         @include mobile {
             margin-top: 2rem;
             position: absolute;
@@ -171,7 +153,7 @@
         @apply text-xl;
         & ul li{
             font-weight: 500;
-            margin: 1rem;
+            margin: 3rem 0;
         }
         @include mobile{
             margin-top: 5rem;
@@ -187,26 +169,50 @@
     @include mobile{
         margin-left: 1rem;
     }
+    @include tablet {
+        display: flex;
+        flex-direction: column;
+        margin-top: 5rem;
+    }
 }
 .LandingPage-Hero-img {
     display: flex;
     justify-content: center;
     align-items: center;
-    height:auto;
+    height: auto;
     & img{
         width: 90%;
         height: auto;
+        transform: scaleX(1.1) scaleY(1.1);
         //box-shadow: 2rem var(--hero-img-shadow);
-        box-shadow: 1rem 1rem 0.5rem 0.15rem var(--hero-img-shadow);
+        @include tablet {
+            transform: scaleY(0.9);
 
+        }
+        box-shadow: 1rem 1rem 0.5rem 0.15rem var(--hero-img-shadow);
+       &:hover{
+           transform: scaleX(1.25) scaleY(1.1);
+           opacity: 0.95;
+           @include tablet {
+               transform: scaleY(1);
+
+           }
+       }
         @include mobile{
+            flex-direction: column;
             margin-top: 1rem;
             width: 80%;
             box-shadow: 0.5rem 0.5rem 0.25rem 0.075rem var(--hero-img-shadow);
         }
+        @include tablet{
+            width: 45%;
+            height: auto;
+
+        }
     }
 }
 .LandingPage-Footer{
+    height: auto;
     @apply mx-auto container py-4 xl:px-20 lg:px-12 sm:px-6 mt-20 px-4;
 
     & div{

@@ -1,8 +1,6 @@
-import { useEffect, useState } from 'react';
-import { Icon } from '@iconify/react';
-import deleteIcon from '@iconify/icons-fluent/delete-48-filled';
 import '../../Styles/Components/Table.scss';
 import {brandsAPICallProps, productsAPICallProps, inventoryAPICallProps} from '../Hero/DashboardHero';
+import {DeleteTableRowModal} from '../Modal/DeleteTableRowModal';
 
 type tableProps ={
     colHeaders ?: Array<string>,
@@ -15,7 +13,8 @@ type tableProps ={
 }
 
 const Table = ({colHeaders, brandData, productData, inventoryData, showBrandTable, showProductTable, showInventoryTable}:tableProps) => {
-    
+    let axios = require('axios').default;
+
     const BrandDataRows = ({brandData}:tableProps)=>{
         return(
             <>
@@ -53,9 +52,7 @@ const Table = ({colHeaders, brandData, productData, inventoryData, showBrandTabl
                         </td>
                         <td
                         className="table-delete-container">
-                        <a href="#">
-                            <Icon icon={deleteIcon} />
-                        </a>
+                            <DeleteTableRowModal deleteId={data.brand_id} deleteCategory="brand"/>  
                         </td>
                     </tr>
                 ))}
@@ -130,16 +127,14 @@ const Table = ({colHeaders, brandData, productData, inventoryData, showBrandTabl
                         </td>
                         <td
                         className="table-delete-container ">
-                            <a href="#">
-                                <Icon icon={deleteIcon} />
-                            </a>
+                            <DeleteTableRowModal deleteId={data.product_id} deleteCategory="inventory"/>      
                         </td>
                     </tr>
                 ))}
             </>
         )
     }
-    const ProductDataRows = ({productData}:tableProps)=>{
+    const ProductDataRows = ({productData, brandData}:tableProps)=>{
         return(
             <>
                 {productData && productData.map((data:productsAPICallProps)=>(
@@ -169,7 +164,11 @@ const Table = ({colHeaders, brandData, productData, inventoryData, showBrandTabl
                             <div className="table-row-col-img-container">
                                 <div className="table-row-text-container">
                                     <div>
-                                        {data.product_brand_id}
+                                        {/* {data.product_brand_id} */}
+                                        {brandData && brandData.map((brand)=>(
+                                            (brand.brand_id === data.product_brand_id)?
+                                                brand.brand_name : null
+                                        ))}
                                     </div>
                                 </div>
                             </div>
@@ -194,9 +193,7 @@ const Table = ({colHeaders, brandData, productData, inventoryData, showBrandTabl
                         </td>
                         <td
                         className="table-delete-container ">
-                            <a href="#">
-                                <Icon icon={deleteIcon} />
-                            </a>
+                            <DeleteTableRowModal deleteId={data.product_id} deleteCategory="product"/>  
                         </td>
                     </tr>
                 ))}

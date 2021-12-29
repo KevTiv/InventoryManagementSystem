@@ -1,3 +1,4 @@
+import { AddInventoryForm } from "../Forms/AddInventoryForm"
 
 
 const InventoryHero = () => {
@@ -5,6 +6,7 @@ const InventoryHero = () => {
         <>
             <div>
                 Inventory
+                <AddInventoryForm/>
             </div>
         </>
     )

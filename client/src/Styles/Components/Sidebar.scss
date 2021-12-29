@@ -7,6 +7,7 @@
     backdrop-filter: blur(5px);
     //box-shadow: 0.25rem 0.25rem 0.25rem 0.075rem var(--component-shadow);
     border-radius: 0rem 1rem 1rem 0rem;
+    min-height: 50rem;
     @apply col-span-2 row-start-1 row-end-2;
 }
 

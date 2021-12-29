@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { Transition } from '@headlessui/react'
+import { Fragment, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../../Components/Navbar/Sidebar_App';
 import Footer from '../../Components/Footer/Footer';
@@ -90,19 +91,72 @@ const Dashboard = () => {
                     </div>
                     <div className="dashboard-hero">
                         {showDashboardComponent?
-                            <DashboardHero EurToUsd={EurToUsd} EurToRwf={EurToRwf} EurToYuan={EurToYuan}
-                                showInventoryTable={showInventoryTable} showProductTable={showProductTable} showBrandTable={showBrandTable} 
-                                onClickInventoryTableOption={onClickInventoryTableOption} onClickProductTableOption={onClickProductTableOption} 
-                                onClickBrandTableOption={onClickBrandTableOption}/>
+                            <Transition
+                                show={showDashboardComponent}
+                            >
+                                <Transition.Child
+                                    enter="transition-opacity ease-linear duration-800"
+                                    enterFrom="opacity-0"
+                                    enterTo="opacity-100"
+                                    leave="transition-opacity ease-linear duration-800"
+                                    leaveFrom="opacity-100"
+                                    leaveTo="opacity-0"
+                                >
+                                    <DashboardHero EurToUsd={EurToUsd} EurToRwf={EurToRwf} EurToYuan={EurToYuan}
+                                        showInventoryTable={showInventoryTable} showProductTable={showProductTable} showBrandTable={showBrandTable} 
+                                        onClickInventoryTableOption={onClickInventoryTableOption} onClickProductTableOption={onClickProductTableOption} 
+                                        onClickBrandTableOption={onClickBrandTableOption}/>
+                                </Transition.Child>
+                            </Transition>
                         :null}
                         {showInventoryComponent?
-                            <InventoryHero/>
+                            <Transition
+                                show={showInventoryComponent}
+                            >
+                                <Transition.Child
+                                    enter="transition-opacity ease-linear duration-800"
+                                    enterFrom="opacity-0"
+                                    enterTo="opacity-100"
+                                    leave="transition-opacity ease-linear duration-800"
+                                    leaveFrom="opacity-100"
+                                    leaveTo="opacity-0"
+                                >
+                                    <InventoryHero/>
+                                </Transition.Child>
+                            </Transition>
                         :null}
                         {showProductComponent? 
-                            <ProductHero/>
+                            <Transition
+                                show={showProductComponent}
+                            >
+                                <Transition.Child
+                                    enter="transition-opacity ease-linear duration-800"
+                                    enterFrom="opacity-0"
+                                    enterTo="opacity-100"
+                                    leave="transition-opacity ease-linear duration-800"
+                                    leaveFrom="opacity-100"
+                                    leaveTo="opacity-0"
+                                >
+                                    <ProductHero/>
+                                </Transition.Child>
+                            </Transition>
+                            
                         :null}
                         {showBrandComponent? 
-                            <BrandHero/>
+                            <Transition
+                                show={showBrandComponent}
+                            >
+                                <Transition.Child
+                                    enter="transition-opacity ease-linear duration-800"
+                                    enterFrom="opacity-0"
+                                    enterTo="opacity-100"
+                                    leave="transition-opacity ease-linear duration-800"
+                                    leaveFrom="opacity-100"
+                                    leaveTo="opacity-0"
+                                >
+                                    <BrandHero/>
+                                </Transition.Child>
+                            </Transition>
                         :null}
                     </div>
                     

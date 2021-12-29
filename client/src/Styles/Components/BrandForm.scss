@@ -23,7 +23,10 @@
     @include Form;
     background-color: var(--component-form-background);
     border-color: var(--border-color);
-    @apply w-6/12 m-2 flex flex-col justify-center rounded-lg p-8 py-10 shadow-lg;
+    max-width: 55rem;
+    min-width: 45rem;
+    
+    @apply w-9/12 m-2 flex flex-col justify-start rounded-lg p-8 py-10 shadow-lg;
     & h1{
         color: var(--dashboard-text);
         @apply text-3xl flex align-middle justify-center w-full ;

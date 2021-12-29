@@ -27,11 +27,11 @@ const NavbarLPage = ({showSigninModal, setShowSignin, signinMethod, setSignin, h
                             }}>
                                 <span>Login</span>
                             </button>
-                            <button type="button" className="landingPage-Navbar-auth-signup"onClick={()=>{
+                            {/* <button type="button" className="landingPage-Navbar-auth-signup"onClick={()=>{
                                 handleGoogleAuthClick();
                             }}>
                                 <span>Sign up</span>
-                            </button>
+                            </button> */}
                         </div>
                     </div>
                 </nav>

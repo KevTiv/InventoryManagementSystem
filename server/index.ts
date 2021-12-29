@@ -74,6 +74,7 @@ app.post('/api/order',async (req:express.Request,  res:express.Response)=>{
 // })
 //add new inventory
 app.post('/api/inventory',async (req:express.Request,  res:express.Response)=>{
+  console.log("Request body: ", req.body);
   const newInventory = await prisma.inventory_table.create({data: req.body});
   res.json(newInventory);
 })
@@ -114,7 +115,7 @@ app.put('/api/order/:id',async (req:express.Request,  res:express.Response)=>{
 //update inventory 
 app.put('/api/inventory/:id',async (req:express.Request,  res:express.Response)=>{
   const updateInventory = await prisma.inventory_table.update({
-    where: {inventory_id: parseInt(req.params.id)},
+    where: {product_id: parseInt(req.params.id)},
     data: req.body
   });
   res.json(updateInventory);
@@ -164,7 +165,7 @@ app.get('/api/order/:id', async (req:express.Request,  res:express.Response) => 
 //get one inventory 
 app.get('/api/inventory/:id', async (req:express.Request,  res:express.Response) => {
   const inventory = await prisma.inventory_table.findMany({
-    where: {inventory_id: parseInt(req.params.id)}
+    where: {product_id: parseInt(req.params.id)}
   });
   res.json(inventory);
 });
@@ -189,9 +190,9 @@ app.get('/api/brand/:id', async (req:express.Request,  res:express.Response) => 
 
 //DELETE ROUTES 
 //delete product
-app.delete('/api/product', async (req:express.Request,  res:express.Response) => {
+app.delete('/api/product/:id', async (req:express.Request,  res:express.Response) => {
   const product = await prisma.product_table.delete({
-    where: {product_ref: req.body},
+    where: {product_id: parseInt(req.params.id)}
   })
 });
 
@@ -219,6 +220,6 @@ app.delete('/api/order/:id', async (req:express.Request,  res:express.Response) 
 //delete inventory
 app.delete('/api/inventory/:id', async (req:express.Request,  res:express.Response) => {
   const inventory = await prisma.inventory_table.delete({
-    where: {inventory_id: parseInt(req.params.id)}
+    where: {product_id: parseInt(req.params.id)}
   })
 });

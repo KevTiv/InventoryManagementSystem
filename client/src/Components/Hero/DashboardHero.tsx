@@ -3,6 +3,7 @@ import CurrencyCard from '../Cards/CurrencyCard';
 import {Icon} from '@iconify/react';
 import Menu from '@iconify/icons-dashicons/menu';
 import Table from '../Table/Table';
+import { Transition } from '@headlessui/react';
 
 type dashboardProps={
     EurToUsd: string,
@@ -95,7 +96,10 @@ const DashboardHero = (
                 })
         }
         fetchBrandData();
-    },[ showBrandTable,showInventoryTable]);
+        return ()=>{
+            setBrandData([]);
+        }
+    },[ showBrandTable,showInventoryTable,showProductTable]);
 
     useEffect(() => {
         const axios = require('axios').default;
@@ -111,6 +115,9 @@ const DashboardHero = (
                 })
         }
         fetchProductData();
+        return ()=>{
+            setProductData([]);
+        }
     },[showProductTable,showInventoryTable]);
 
     useEffect(() => {
@@ -126,58 +133,104 @@ const DashboardHero = (
                 })
         }
         fetchInventory();
+        return ()=>{
+            setInventoryData([]);
+        }
     },[showInventoryTable]);
     
     return (
         <>
-            <div>
-                <section>
-                    <div className="dashboard-header">
-                        <h1>Dashboard</h1>
-                        <div>
-                            <Icon icon={Menu} className="dashboard-header-menu-icon"/>
+                <div>
+                    <section>
+                        <div className="dashboard-header">
+                            <h1>Dashboard</h1>
+                            <div>
+                                <Icon icon={Menu} className="dashboard-header-menu-icon"/>
+                            </div>
                         </div>
-                    </div>
-                    <div className="dashboard-curr-watch-container">
-                        <CurrencyCard currencyConversionRate={EurToUsd} currType='USD'/>
-                        <CurrencyCard currencyConversionRate={EurToRwf} currType='RWF'/>
-                        <CurrencyCard currencyConversionRate={EurToYuan} currType='CNY'/>
-                    </div>
-                </section>
-                <section>
-                    <div className="dashboard-tables-show-panel">
-                        <div className="dashboard-tables-show-panel-options">
-                            <h2>Table</h2>
-                            <ul>
-                                <li>
-                                    <span onClick={onClickInventoryTableOption}>Inventory</span>
-                                </li>
-                                <li>
-                                    <span onClick={onClickProductTableOption}>Product</span>
-                                </li>
-                                <li>
-                                    <span onClick={onClickBrandTableOption}>Brand</span>
-                                </li>
-                            </ul>
+                        <div className="dashboard-curr-watch-container">
+                            <CurrencyCard currencyConversionRate={EurToUsd} currType='USD'/>
+                            <CurrencyCard currencyConversionRate={EurToRwf} currType='RWF'/>
+                            <CurrencyCard currencyConversionRate={EurToYuan} currType='CNY'/>
                         </div>
-                    </div>
-                </section>
-                <section>
-                    <div className="tables-view">
-                        {/* {showInventoryTable?<InventoryTable/>:null} */}
-                        {showInventoryTable?
-                            <Table colHeaders={inventoryTableHeaders} inventoryData={inventoryData} 
-                                productData={productData} brandData={brandData} showInventoryTable={showInventoryTable}/>
-                        :null}
-                        {showProductTable?
-                            <Table colHeaders={productTableHeaders} productData={productData} showProductTable={showProductTable}/>
-                        :null}
-                        {showBrandTable?
-                            <Table colHeaders={brandTableHeaders} brandData={brandData} showBrandTable={showBrandTable}/>
-                        :null}
-                    </div>
-                </section>
-            </div>
+                    </section>
+                    <section>
+                        <div className="dashboard-tables-show-panel">
+                            <div className="dashboard-tables-show-panel-options">
+                                <h2>Table</h2>
+                                <ul>
+                                    <li>
+                                        <span onClick={onClickInventoryTableOption}>Inventory</span>
+                                    </li>
+                                    <li>
+                                        <span onClick={onClickProductTableOption}>Product</span>
+                                    </li>
+                                    <li>
+                                        <span onClick={onClickBrandTableOption}>Brand</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div className="tables-view">
+                            {/* {showInventoryTable?<InventoryTable/>:null} */}
+                            {showInventoryTable?
+                                <Transition
+                                    show={showInventoryTable}
+                                >
+                                <Transition.Child
+                                    enter="transition-opacity ease-linear duration-800"
+                                    enterFrom="opacity-0"
+                                    enterTo="opacity-100"
+                                    leave="transition-opacity ease-linear duration-800"
+                                    leaveFrom="opacity-100"
+                                    leaveTo="opacity-0"
+                                >
+                                    <Table colHeaders={inventoryTableHeaders} inventoryData={inventoryData} 
+                                    productData={productData} brandData={brandData} showInventoryTable={showInventoryTable}/>
+                                </Transition.Child>
+                            </Transition>
+                            
+                                
+                            :null}
+                            {showProductTable?
+                            <Transition
+                                    show={showProductTable}
+                                >
+                                    <Transition.Child
+                                        enter="transition-opacity ease-linear duration-800"
+                                        enterFrom="opacity-0"
+                                        enterTo="opacity-100"
+                                        leave="transition-opacity ease-linear duration-800"
+                                        leaveFrom="opacity-100"
+                                        leaveTo="opacity-0"
+                                    >
+                                        <Table colHeaders={productTableHeaders} productData={productData} showProductTable={showProductTable}/>
+                                    </Transition.Child>
+                            </Transition>
+                                
+                            :null}
+                            {showBrandTable?
+                            <Transition
+                                    show={showBrandTable}
+                                >
+                                    <Transition.Child
+                                        enter="transition-opacity ease-linear duration-800"
+                                        enterFrom="opacity-0"
+                                        enterTo="opacity-100"
+                                        leave="transition-opacity ease-linear duration-800"
+                                        leaveFrom="opacity-100"
+                                        leaveTo="opacity-0"
+                                    >
+                                        <Table colHeaders={brandTableHeaders} brandData={brandData} showBrandTable={showBrandTable}/>
+                                    </Transition.Child>
+                            </Transition>
+                                
+                            :null}
+                        </div>
+                    </section>
+                </div>
         </>
     )
 }
