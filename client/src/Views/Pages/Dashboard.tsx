@@ -8,12 +8,11 @@ import ProductHero from '../../Components/Hero/ProductHero';
 import InventoryHero from '../../Components/Hero/InventoryHero';
 import BrandHero from '../../Components/Hero/BrandHero';
 import '../../Styles/Views/Pages/DashboardPage.scss';
+import { getYear } from '../../Utils/Dates/dateFunctions';
 
 const Dashboard = () => {
     let navigate = useNavigate();
-    const [EurToUsd, setEurToUsd] = useState<string>('');
-    const [EurToRwf, setEurToRwf] = useState<string>('');
-    const [EurToYuan, setEurToYuan] = useState<string>('');
+    const [currentYear, setCurrentYear] = useState<number>(0);
     
     const [showInventoryTable, setShowInventory] = useState<boolean>(true);
     const [showProductTable, setShowProduct] = useState<boolean>(false);
@@ -65,7 +64,6 @@ const Dashboard = () => {
         setShowBrand(true);
     };
     useEffect(()=>{
-        
         let authToken = sessionStorage.getItem('Auth Token');
         console.log("AUTH TOKEN:__",authToken)
         if (authToken) {
@@ -75,7 +73,9 @@ const Dashboard = () => {
             //sessionStorage.removeItem('Auth Token');
             sessionStorage.clear();
             navigate('/');
-        }; 
+        };
+        
+        setCurrentYear(getYear);
     }, [navigate]);
     
     return (
@@ -102,7 +102,7 @@ const Dashboard = () => {
                                     leaveFrom="opacity-100"
                                     leaveTo="opacity-0"
                                 >
-                                    <DashboardHero EurToUsd={EurToUsd} EurToRwf={EurToRwf} EurToYuan={EurToYuan}
+                                    <DashboardHero
                                         showInventoryTable={showInventoryTable} showProductTable={showProductTable} showBrandTable={showBrandTable} 
                                         onClickInventoryTableOption={onClickInventoryTableOption} onClickProductTableOption={onClickProductTableOption} 
                                         onClickBrandTableOption={onClickBrandTableOption}/>
@@ -162,7 +162,7 @@ const Dashboard = () => {
                     
                 </div>
                 <div className="dashboard-footer">
-                    <Footer currentYear={2021}/>
+                    <Footer currentYear={currentYear}/>
                 </div>
             </div>
         </>

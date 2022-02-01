@@ -37,7 +37,7 @@ const app = initializeApp(firebaseConfig);
 export const uploadImage = (file:File, name:string, destination:string, setURL:(downloadURL:string)=>void, setUploadComplete: () => void) => {
 
     //const storageRef = ref(storage, 'images');
-    console.log(file.type, '<-- type');
+    // console.log(file.type, '<-- type');
     // const spaceRef = ref(storage, `image/brands/${name}`);
     const spaceRef = ref(storage, `${destination}${name}`);
     const metadata = {

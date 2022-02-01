@@ -6,9 +6,6 @@ import Table from '../Table/Table';
 import { Transition } from '@headlessui/react';
 
 type dashboardProps={
-    EurToUsd: string,
-    EurToRwf: string, 
-    EurToYuan: string, 
     showInventoryTable: boolean,
     showProductTable: boolean,
     showBrandTable: boolean,
@@ -67,8 +64,7 @@ export type inventoryAPICallProps ={
     product_mouvement?: JSON
 }
 const DashboardHero = (
-    {EurToUsd, EurToRwf, EurToYuan, showInventoryTable, 
-        showProductTable, showBrandTable, onClickInventoryTableOption, 
+    {showInventoryTable, showProductTable, showBrandTable, onClickInventoryTableOption, 
         onClickProductTableOption, onClickBrandTableOption}:dashboardProps) => {
     
     //const axios = require('axios').default;
@@ -149,9 +145,9 @@ const DashboardHero = (
                             </div>
                         </div>
                         <div className="dashboard-curr-watch-container">
-                            <CurrencyCard currencyConversionRate={EurToUsd} currType='USD'/>
-                            <CurrencyCard currencyConversionRate={EurToRwf} currType='RWF'/>
-                            <CurrencyCard currencyConversionRate={EurToYuan} currType='CNY'/>
+                            <CurrencyCard currType='USD'/>
+                            <CurrencyCard currType='RWF'/>
+                            <CurrencyCard currType='CNY'/>
                         </div>
                     </section>
                     <section>

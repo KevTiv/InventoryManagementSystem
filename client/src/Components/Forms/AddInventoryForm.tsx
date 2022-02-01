@@ -213,6 +213,10 @@ export const AddInventoryForm = () => {
                 })
         }
         fetchProductData();
+        
+        return ()=>{
+            setProductData([]);
+        }
     },[]);
     return (
         <>

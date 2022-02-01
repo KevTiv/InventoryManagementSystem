@@ -5,6 +5,7 @@ import LandingPage from './Pages/LandingPage';
 import Dashboard from './Pages/Dashboard';
 import {handleGoogleAuth} from '../Provider/AuthProvider';
 import {useNavigate} from 'react-router-dom';
+import { getYear } from '../Utils/Dates/dateFunctions';
 function App() {
   
   let navigate = useNavigate();
@@ -28,12 +29,7 @@ function App() {
   }
 
   useEffect(() => {
-    const currentYear = ()=>{
-      const curDate = new Date();
-      setCurrentYear(curDate.getFullYear());
-    }
-
-    currentYear();
+    setCurrentYear(getYear);
   },[]);
 
   return (
