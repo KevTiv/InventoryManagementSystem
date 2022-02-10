@@ -33,10 +33,10 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
-    "start": "BROWSER=firefox craco start",
+    "start": "craco start",
     "build": "craco build",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
+    "deploy": "gh-pages -b main -d build",
     "test": "craco test",
     "eject": "react-scripts eject"
   },
@@ -58,7 +58,7 @@
       "last 1 safari version"
     ]
   },
-  "homepage":"https://kevtiv.github.io/inventoryManagementSystem/client/",
+  "homepage":"https://kevtiv.github.io/inventoryManagementSystem/",
   "devDependencies": {
     "@iconify/react": "^3.1.0",
     "autoprefixer": "^9.8.8",

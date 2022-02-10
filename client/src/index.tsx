@@ -8,7 +8,7 @@ import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router>
+    <Router basename={process.env.REACT_APP_PUBLIC_URL}>
       <GoogleReCaptchaProvider
         reCaptchaKey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
         language="en"
