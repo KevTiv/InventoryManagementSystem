@@ -108,10 +108,8 @@ export const AddInventoryForm = () => {
                                                     </span>
                                                     {selected ? (
                                                         <span
-                                                            className={`${
-                                                                active ? 'text-blue-600' : 'text-blue-600'
-                                                            }
-                                                            absolute inset-y-0 left-0 flex items-center pl-3`}
+                                                        
+                                                            className={`absolute inset-y-0 left-0 flex items-center pl-3`} // ${ active ? 'text-blue-600' : 'text-blue-600'}
                                                         >
                                                             <CheckIcon className="w-5 h-5 ml-3" aria-hidden="true" />
                                                         </span>
@@ -137,8 +135,8 @@ export const AddInventoryForm = () => {
             console.log('Execute recaptcha not yet available');
             return;
             }
-            const token = await executeRecaptcha('yourAction');
-            setToken(token);
+            const newToken = await executeRecaptcha('yourAction');
+            setToken(newToken);
     }, []);
     useEffect(() => {
         handleReCaptchaVerify();
@@ -165,8 +163,7 @@ export const AddInventoryForm = () => {
 
                     //If product exist in the inventory Db update else create new entry
                     await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/inventory/${data.product_id}`)
-                    .then(async function (res: any){
-                        console.log("res: ",res);
+                    .then(async ()=>{
                         setIsProductInInventory(true);
 
                     }).catch(async function(err: any){
@@ -175,16 +172,14 @@ export const AddInventoryForm = () => {
                     });
                     if(isProductInInventory === true){
                         await axios.put(`${process.env.REACT_APP_SERVER_URL}/api/inventory/${data.product_id}`,data)
-                        .then(function (res: any){
-                            console.log("res: ",res);
+                        .then(()=>{
                             navigate('/');
                         }).catch(function(err: any){
                             console.error("err: ",err);
                         });
                     }else{
                         await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/inventory`,data)
-                        .then(function (res: any){
-                            console.log("res: ",res);
+                        .then(()=>{
                             navigate('/');
                         }).catch(function(err: any){
                             console.error("err: ",err);
@@ -192,7 +187,7 @@ export const AddInventoryForm = () => {
                     }
                     
                 }
-            }).catch(function(err: any){
+            }).catch((err: any)=>{
                 console.error("err: ",err);
                 // return err;
             });
@@ -206,7 +201,6 @@ export const AddInventoryForm = () => {
                 .then((res: any)=>{
                     const data = res.data;
                     setProductData(data);
-                    // console.log("productData: ",productData);
                 })
                 .catch((err: any) => {
                     console.error(err);

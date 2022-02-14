@@ -36,11 +36,9 @@ app.post('/api/verify_token',async (req:express.Request,  res:express.Response) 
     headers: {
       "Content-Type": "application/x-www-form-urlencoded; charset=utf-8"
     }
-  }).then(response => {
-    //console.log('response: ', response.data.success, 'Score: ', response.data.score);
+  }).then((response: any) => {
     res.json(response.data);
-  }).catch(err => {
-    //console.error('error: ', err);
+  }).catch((err: any)=> {
     res.json(err);
   });
   

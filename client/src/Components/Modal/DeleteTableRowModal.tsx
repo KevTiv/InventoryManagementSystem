@@ -2,7 +2,7 @@ import { Dialog, Transition } from '@headlessui/react';
 import { Icon } from '@iconify/react';
 import deleteIcon from '@iconify/icons-fluent/delete-48-filled';
 import { Fragment, useState } from 'react';
-import { useHref, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 type deleteTableRowModalProps={
     deleteId: number,
@@ -20,13 +20,13 @@ export const DeleteTableRowModal =({deleteId, deleteCategory}:deleteTableRowModa
   const productUrlFragment = '/api/product/';
   const brandUrlFragment = '/api/brand/';
   
-  const deleteFunction = async(deleteId:number, deleteCategory:string )=>{
+  const deleteFunction = async(idToDelete:number, categoryToDelete:string )=>{
 
     // ! Create a refesh method after axios is complete.
 
-    switch (deleteCategory) {
+    switch (categoryToDelete) {
       case 'inventory':
-        await axios.delete(`${process.env.REACT_APP_SERVER_URL}${inventoryUrlFragment}${deleteId}`)
+        await axios.delete(`${process.env.REACT_APP_SERVER_URL}${inventoryUrlFragment}${idToDelete}`)
         .then(function(res:any){
           console.log(res);
         }).catch(function(err:any){
@@ -36,7 +36,7 @@ export const DeleteTableRowModal =({deleteId, deleteCategory}:deleteTableRowModa
         break;
 
       case 'product':
-        await axios.delete(`${process.env.REACT_APP_SERVER_URL}${productUrlFragment}${deleteId}`)
+        await axios.delete(`${process.env.REACT_APP_SERVER_URL}${productUrlFragment}${idToDelete}`)
         .then(function(res:any){
           console.log(res);
         }).catch(function(err:any){
@@ -46,7 +46,7 @@ export const DeleteTableRowModal =({deleteId, deleteCategory}:deleteTableRowModa
         break;
 
       case 'brand':
-        await axios.delete(`${process.env.REACT_APP_SERVER_URL}${brandUrlFragment}${deleteId}`)
+        await axios.delete(`${process.env.REACT_APP_SERVER_URL}${brandUrlFragment}${idToDelete}`)
         .then(function(res:any){
           console.log(res);
         }).catch(function(err:any){

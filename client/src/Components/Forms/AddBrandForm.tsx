@@ -79,7 +79,6 @@ export const AddBrandForm = () => {
                                 <Listbox.Options 
                                 className="absolute w-2/6 py-1 mt-10 overflow-auto text-base
                                     bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                                        {/* console.log('Countries: ', countries["country"][0].name); */}
                                 {countries["country"]?.map((country, index) => (
                                     <Listbox.Option
                                         key={index}
@@ -103,10 +102,7 @@ export const AddBrandForm = () => {
                                         </span>
                                         {selected ? (
                                             <span
-                                            className={`${
-                                                active ? 'text-blue-600' : 'text-blue-600'
-                                            }
-                                                    absolute inset-y-0 left-0 flex items-center pl-3`}
+                                            className={`absolute inset-y-0 left-0 flex items-center pl-3`}//${active ? 'text-blue-600' : 'text-blue-600'}
                                             >
                                             <CheckIcon className="w-5 h-5" aria-hidden="true" />
                                             </span>
@@ -181,10 +177,7 @@ export const AddBrandForm = () => {
                                         </span>
                                         {selected ? (
                                             <span
-                                            className={`${
-                                                active ? 'text-blue-600' : 'text-blue-600'
-                                            }
-                                                    absolute inset-y-0 left-0 flex items-center pl-3`}
+                                            className={`absolute inset-y-0 left-0 flex items-center pl-3`}//${active ? 'text-blue-600' : 'text-blue-600'}
                                             >
                                             <CheckIcon className="w-5 h-5" aria-hidden="true" />
                                             </span>
@@ -207,8 +200,8 @@ export const AddBrandForm = () => {
             console.log('Execute recaptcha not yet available');
             return;
             }
-            const token = await executeRecaptcha('yourAction');
-            setToken(token);
+            const newToken = await executeRecaptcha('yourAction');
+            setToken(newToken);
     }, []);
 
     const setURL = (downloadURL:string) => {
@@ -231,8 +224,6 @@ export const AddBrandForm = () => {
                     token
                 }
             }).then(async function (res:any){
-                // console.log('verifyRes: ', res.brandInputFormData.score);
-                // console.log(res);
                 if(res.brandInputFormData.score > 0.5){
                     const file:any = brandInputFormData.img_file;
                     uploadImage(file[0], brandInputFormData.brand_name, destination, setURL, setUploadComplete);
@@ -248,18 +239,15 @@ export const AddBrandForm = () => {
                     newBrand.brand_img = brandInputFormData.brand_img;
 
                     await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/brand`,newBrand)
-                    .then(function (res: any){
-                        console.log("res: ",res);
+                    .then(()=>{
                         setImageUploadComplete(false);
                         navigate('/');
-                    }).catch(function(err: any){
-                        console.error("err: ",err);
+                    }).catch((err: any)=>{
                         setImageUploadComplete(false);
                     });
                 }
-            }).catch(function(err: any){
-                console.error("err: ",err);
-                // return err;
+            }).catch((err: any)=>{
+                console.error("err: ", err);
             });
         }
         

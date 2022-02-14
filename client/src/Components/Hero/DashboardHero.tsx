@@ -66,8 +66,6 @@ export type inventoryAPICallProps ={
 const DashboardHero = (
     {showInventoryTable, showProductTable, showBrandTable, onClickInventoryTableOption, 
         onClickProductTableOption, onClickBrandTableOption}:dashboardProps) => {
-    
-    //const axios = require('axios').default;
 
     const brandTableHeaders:string[] = ["Name", "Industry", "Country Of Origin"];
     const productTableHeaders: string[] = ["Reference", "Name", "Brand", "Category", "Price"];
@@ -82,10 +80,8 @@ const DashboardHero = (
         const fetchBrandData = async ()=>{ 
             await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/brand`)
                 .then((res: any)=>{
-                    //console.log(res);
                     const data = res.data;
                     setBrandData(data);
-                    //console.log(brandData);
                 })
                 .catch((err: any) => {
                     console.error(err);
@@ -104,7 +100,6 @@ const DashboardHero = (
                 .then((res: any)=>{
                     const data = res.data;
                     setProductData(data);
-                    // console.log("productData: ",productData);
                 })
                 .catch((err: any) => {
                     console.error(err);

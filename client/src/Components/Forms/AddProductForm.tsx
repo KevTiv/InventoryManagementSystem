@@ -161,10 +161,7 @@ const AddProductForm = () => {
                                         </span>
                                         {selected ? (
                                             <span
-                                            className={`${
-                                                active ? 'text-blue-600' : 'text-blue-600'
-                                            }
-                                                    absolute inset-y-0 left-0 flex items-center pl-3`}
+                                                className={`absolute inset-y-0 left-0 flex items-center pl-3`} //${active ? 'text-blue-600' : 'text-blue-600'}
                                             >
                                             <CheckIcon className="w-5 h-5" aria-hidden="true" />
                                             </span>
@@ -222,7 +219,7 @@ const AddProductForm = () => {
                                 <Listbox.Options 
                                 className="absolute w-2/6 py-1 mt-10 overflow-auto text-base
                                     bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                                        {/* console.log('Countries: ', countries["country"][0].name); */}
+
                                 {countries["country"]?.map((country, index) => (
                                     <Listbox.Option
                                         key={index}

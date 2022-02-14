@@ -1,8 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { getStorage } from "firebase/storage";
-// const { initializeAppCheck, ReCaptchaV3Provider, getToken } = require("firebase/app-check");
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -14,34 +12,11 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-// Pass your reCAPTCHA v3 site key (public key) to activate(). Make sure this
-// key is the counterpart to the secret key you set in the Firebase console.
 
-// const appCheck = initializeAppCheck(app, {
-//   provider: new ReCaptchaV3Provider(process.env.REACT_APP_RECAPTCHA_SITE_KEY),
-
-//   // Optional argument. If true, the SDK automatically refreshes App Check
-//   // tokens as needed.
-//   isTokenAutoRefreshEnabled: true
-// });
-
-// export const passToken =()=>{
-//   getToken(appCheck)
-//   .then(() => {
-//     console.log('success')
-//   })
-//   .catch((err:any) => {
-//     console.error(err.message)
-//   })
-// } 
 export const uploadImage = (file:File, name:string, destination:string, setURL:(downloadURL:string)=>void, setUploadComplete: () => void) => {
 
-    //const storageRef = ref(storage, 'images');
-    // console.log(file.type, '<-- type');
-    // const spaceRef = ref(storage, `image/brands/${name}`);
     const spaceRef = ref(storage, `${destination}${name}`);
     const metadata = {
-        // contentType: 'image/jpeg',
         contentType: file.type,
     };
     
@@ -55,10 +30,8 @@ export const uploadImage = (file:File, name:string, destination:string, setURL:(
             console.log('Upload is ' + progress + '% done');
             switch (snapshot.state) {
             case 'paused':
-                console.log('Upload is paused');
                 break;
             case 'running':
-                console.log('Upload is running');
                 break;
             }
         }, 
@@ -70,10 +43,6 @@ export const uploadImage = (file:File, name:string, destination:string, setURL:(
             console.log('uploadTask2 : ', uploadTask)
             
             getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                console.log('File available at', downloadURL);
-                console.log('uploadTask.snapshot.ref: ',uploadTask.snapshot.ref);
-                //setImgUrl(downloadURL);
-                // setValue('brand_img', downloadURL);
                 setURL(downloadURL);
                 setUploadComplete();
             }).catch((error) => {
