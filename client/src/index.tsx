@@ -19,10 +19,10 @@ ReactDOM.render(
           defer: true,
           appendTo: 'head',
           nonce: undefined // optional, default undefined
-        }}>
-      <App />
+        }}
+      >
+        <App />
     </GoogleReCaptchaProvider>
-      
     </Router>
   </React.StrictMode>,
   document.getElementById('root')

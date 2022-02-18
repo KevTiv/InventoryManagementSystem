@@ -243,10 +243,7 @@ const AddProductForm = () => {
                                         </span>
                                         {selected ? (
                                             <span
-                                            className={`${
-                                                active ? 'text-blue-600' : 'text-blue-600'
-                                            }
-                                                    absolute inset-y-0 left-0 flex items-center pl-3`}
+                                            className={`absolute inset-y-0 left-0 flex items-center pl-3`} //${active ? 'text-blue-600' : 'text-blue-600'}
                                             >
                                             <CheckIcon className="w-5 h-5" aria-hidden="true" />
                                             </span>
@@ -323,10 +320,7 @@ const AddProductForm = () => {
                                         </span>
                                         {selected ? (
                                             <span
-                                            className={`${
-                                                active ? 'text-blue-600' : 'text-blue-600'
-                                            }
-                                                    absolute inset-y-0 left-0 flex items-center pl-3`}
+                                            className={`absolute inset-y-0 left-0 flex items-center pl-3`} //${active ? 'text-blue-600' : 'text-blue-600'} 
                                             >
                                             <CheckIcon className="w-5 h-5" aria-hidden="true" />
                                             </span>
@@ -397,10 +391,7 @@ const AddProductForm = () => {
                                         </span>
                                         {selected ? (
                                             <span
-                                            className={`${
-                                                active ? 'text-blue-600' : 'text-blue-600'
-                                            }
-                                                    absolute inset-y-0 left-0 flex items-center pl-3`}
+                                            className={`absolute inset-y-0 left-0 flex items-center pl-3`} //${active ? 'text-blue-600' : 'text-blue-600'}
                                             >
                                             <CheckIcon className="w-5 h-5" aria-hidden="true" />
                                             </span>
@@ -471,10 +462,7 @@ const AddProductForm = () => {
                                         </span>
                                         {selected ? (
                                             <span
-                                            className={`${
-                                                active ? 'text-blue-600' : 'text-blue-600'
-                                            }
-                                                    absolute inset-y-0 left-0 flex items-center pl-3`}
+                                                className={`absolute inset-y-0 left-0 flex items-center pl-3`} //${active ? 'text-blue-600' : 'text-blue-600'}
                                             >
                                             <CheckIcon className="w-5 h-5" aria-hidden="true" />
                                             </span>
@@ -689,8 +677,8 @@ const AddProductForm = () => {
             console.log('Execute recaptcha not yet available');
             return;
             }
-            const token = await executeRecaptcha('yourAction');
-            setToken(token);
+            const newToken = await executeRecaptcha('yourAction');
+            setToken(newToken);
     }, []);
 
     const setURL = (downloadURL:string) => {
@@ -740,10 +728,8 @@ const AddProductForm = () => {
 
                     await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/product`,newProduct)
                     .then(function (res: any){
-                        console.log("res: ",res);
                         setImageUploadComplete(false);
                     }).catch(function(err: any){
-                        console.error("err: ",err);
                         setImageUploadComplete(false);
                     }); 
                     console.log('newProduct: ',newProduct);
