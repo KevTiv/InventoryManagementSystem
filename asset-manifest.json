@@ -1,24 +1,24 @@
 {
   "files": {
-    "main.css": "/inventoryManagementSystem/client/static/css/main.56e03504.chunk.css",
-    "main.js": "/inventoryManagementSystem/client/static/js/main.891409e3.chunk.js",
-    "main.js.map": "/inventoryManagementSystem/client/static/js/main.891409e3.chunk.js.map",
-    "runtime-main.js": "/inventoryManagementSystem/client/static/js/runtime-main.6b91fff1.js",
-    "runtime-main.js.map": "/inventoryManagementSystem/client/static/js/runtime-main.6b91fff1.js.map",
-    "static/js/2.72e21c61.chunk.js": "/inventoryManagementSystem/client/static/js/2.72e21c61.chunk.js",
-    "static/js/2.72e21c61.chunk.js.map": "/inventoryManagementSystem/client/static/js/2.72e21c61.chunk.js.map",
-    "static/js/3.a765540e.chunk.js": "/inventoryManagementSystem/client/static/js/3.a765540e.chunk.js",
-    "static/js/3.a765540e.chunk.js.map": "/inventoryManagementSystem/client/static/js/3.a765540e.chunk.js.map",
-    "index.html": "/inventoryManagementSystem/client/index.html",
-    "static/css/main.56e03504.chunk.css.map": "/inventoryManagementSystem/client/static/css/main.56e03504.chunk.css.map",
-    "static/js/2.72e21c61.chunk.js.LICENSE.txt": "/inventoryManagementSystem/client/static/js/2.72e21c61.chunk.js.LICENSE.txt",
-    "static/media/img03.5d56b1b3.jpg": "/inventoryManagementSystem/client/static/media/img03.5d56b1b3.jpg",
-    "static/media/img05.7446e0f7.jpg": "/inventoryManagementSystem/client/static/media/img05.7446e0f7.jpg"
+    "main.css": "/inventoryManagementSystem/static/css/main.56e03504.chunk.css",
+    "main.js": "/inventoryManagementSystem/static/js/main.8aca6401.chunk.js",
+    "main.js.map": "/inventoryManagementSystem/static/js/main.8aca6401.chunk.js.map",
+    "runtime-main.js": "/inventoryManagementSystem/static/js/runtime-main.021b9def.js",
+    "runtime-main.js.map": "/inventoryManagementSystem/static/js/runtime-main.021b9def.js.map",
+    "static/js/2.e608c996.chunk.js": "/inventoryManagementSystem/static/js/2.e608c996.chunk.js",
+    "static/js/2.e608c996.chunk.js.map": "/inventoryManagementSystem/static/js/2.e608c996.chunk.js.map",
+    "static/js/3.a765540e.chunk.js": "/inventoryManagementSystem/static/js/3.a765540e.chunk.js",
+    "static/js/3.a765540e.chunk.js.map": "/inventoryManagementSystem/static/js/3.a765540e.chunk.js.map",
+    "index.html": "/inventoryManagementSystem/index.html",
+    "static/css/main.56e03504.chunk.css.map": "/inventoryManagementSystem/static/css/main.56e03504.chunk.css.map",
+    "static/js/2.e608c996.chunk.js.LICENSE.txt": "/inventoryManagementSystem/static/js/2.e608c996.chunk.js.LICENSE.txt",
+    "static/media/img03.5d56b1b3.jpg": "/inventoryManagementSystem/static/media/img03.5d56b1b3.jpg",
+    "static/media/img05.7446e0f7.jpg": "/inventoryManagementSystem/static/media/img05.7446e0f7.jpg"
   },
   "entrypoints": [
-    "static/js/runtime-main.6b91fff1.js",
-    "static/js/2.72e21c61.chunk.js",
+    "static/js/runtime-main.021b9def.js",
+    "static/js/2.e608c996.chunk.js",
     "static/css/main.56e03504.chunk.css",
-    "static/js/main.891409e3.chunk.js"
+    "static/js/main.8aca6401.chunk.js"
   ]
 }
