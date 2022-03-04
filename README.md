@@ -1,4 +1,4 @@
-# inventoryManagementSystem
+# Inventory Management System
 
 # LIVE DEMO 
   https://kevtiv.github.io/inventoryManagementSystem/
