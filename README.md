@@ -1,6 +1,7 @@
 # inventoryManagementSystem
 
-# LIVE DEMO: https://kevtiv.github.io/inventoryManagementSystem/
+# LIVE DEMO 
+  https://kevtiv.github.io/inventoryManagementSystem/
 
 # DESCRIPTION
 The is web application project was created with the aim to produce an easy online solution for small businesses inventory management needs. 
