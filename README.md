@@ -41,6 +41,6 @@ The back end was built with NodeJs, and PrismaJs as the ORM (Object-relational m
 - implement error handling for wrong form submissions and update the state of any form error to the end-user.
 
 # KNOWN ISSUES
-- When the end-user input a new product, brand, inventory or update a product, brand, or update inventory. He/she has to manually refresh the page for 
+- When the end-user input a new product, brand, inventory or update a product, brand, or update inventory. The user has to manually refresh the page for 
   the affected table to reflect the change.
 - A cloud-based PostgreSQL database is not yet set online.
